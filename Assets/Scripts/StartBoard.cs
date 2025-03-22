@@ -5,11 +5,14 @@ using UnityEngine;
 public class StartBoard : MonoBehaviour
 {
     public Transform player;
-
+    public GameObject[] tooltips;
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (GameObject tooltip in tooltips)
+        {
+            tooltip.SetActive(false);
+        }
     }
 
     // Update is called once per frame
