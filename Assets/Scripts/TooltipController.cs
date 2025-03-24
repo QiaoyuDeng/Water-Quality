@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.UI;
+using TMPro;
+
 
 public class TooltipController : MonoBehaviour
 {
     public GameObject[] tooltips; // 存放所有 Tooltip 对象
     public AudioClip[] audioClips; // 存放音频文件
     public AudioSource audioSource; // 音频播放器
-    public float displayTime = 5f; // 每个 Tooltip 显示 5 秒
     private bool isRunning = false;
     public GameObject startBoard;
+    public GameObject dialogPrefab;
+    public MenuIntroController MenuIntroController;
 
     private void Start()
     {
@@ -61,5 +65,31 @@ public class TooltipController : MonoBehaviour
             //yield return new WaitForSeconds(displayTime);
             tooltips[i].SetActive(false); // 关闭当前 Tooltip
         }
+
+        Debug.Log("准备打开对话框...");
+        // 所有 Tooltip 播放完之后，显示对话框
+
+        Dialog myDialog = Dialog.Open(
+            dialogPrefab
+        );
+
+
+        if (myDialog != null)
+        {
+            myDialog.OnClosed += result =>
+            {
+                switch (result.Result)
+                {
+                    case DialogButtonType.Yes:
+                        StartCoroutine(ShowTooltipsSequentially()); // Replay
+                        break;
+                    case DialogButtonType.No:
+                        Debug.Log("MenuIntroController");
+                        MenuIntroController.StartIntro();
+                        break;
+                }
+            };
+        }
+
     }
 }

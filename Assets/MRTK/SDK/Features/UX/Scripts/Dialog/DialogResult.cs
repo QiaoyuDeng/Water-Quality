@@ -34,5 +34,6 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// object of the dialog
         /// </summary>
         public object Variable { get; set; }
+
     }
 }

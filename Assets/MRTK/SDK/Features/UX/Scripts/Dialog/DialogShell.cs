@@ -47,40 +47,67 @@ namespace Microsoft.MixedReality.Toolkit.UI
         protected override void FinalizeLayout() { }
 
         /// <inheritdoc />
+        /// 
+
         protected override void GenerateButtons()
         {
-            // Get List of ButtonTypes that should be created on Dialog
-            List<DialogButtonType> buttonTypes = new List<DialogButtonType>();
-            foreach (DialogButtonType buttonType in Enum.GetValues(typeof(DialogButtonType)))
-            {
-                // If this button type flag is set
-                if (buttonType != DialogButtonType.None && result.Buttons.IsMaskSet(buttonType))
-                {
-                    buttonTypes.Add(buttonType);
-                }
-            }
-
-            twoButtonSet = new GameObject[2];
-
-            // Find all buttons on dialog...
+            // 🔁 只查找 prefab 中现有的按钮，不生成新按钮
             List<DialogButton> buttonsOnDialog = GetAllDialogButtons();
 
-            // Set desired buttons active and the rest inactive
-            SetButtonsActiveStates(buttonsOnDialog, buttonTypes.Count);
+            // 全部激活
+            SetButtonsActiveStates(buttonsOnDialog, buttonsOnDialog.Count);
 
-            // Set titles and types
-            if (buttonTypes.Count > 0)
+            // 设置按钮类型（可选），不改 label！
+            for (int i = 0; i < buttonsOnDialog.Count; ++i)
             {
-                // If we have two buttons then do step 1, else 0
-                int step = buttonTypes.Count >= 2 ? 1 : 0;
-                for (int i = 0; i < buttonTypes.Count && i < 2; ++i)
-                {
-                    twoButtonSet[i] = buttonsOnDialog[i + step].gameObject;
-                    buttonsOnDialog[i + step].SetTitle(buttonTypes[i].ToString());
-                    buttonsOnDialog[i + step].ButtonTypeEnum = buttonTypes[i];
-                }
+                buttonsOnDialog[i].ParentDialog = this;
+
+                // 如果你不需要点击后回调 Result，就不必设置这句
+                // buttonsOnDialog[i].ButtonTypeEnum = DialogButtonType.YourCustomEnum;
+            }
+
+            // 可选：你可以根据需要设置两个按钮的引用
+            if (buttonsOnDialog.Count >= 2)
+            {
+                twoButtonSet = new GameObject[2];
+                twoButtonSet[0] = buttonsOnDialog[0].gameObject;
+                twoButtonSet[1] = buttonsOnDialog[1].gameObject;
             }
         }
+        //protected override void GenerateButtons()
+        //{
+        //    // Get List of ButtonTypes that should be created on Dialog
+        //    List<DialogButtonType> buttonTypes = new List<DialogButtonType>();
+        //    foreach (DialogButtonType buttonType in Enum.GetValues(typeof(DialogButtonType)))
+        //    {
+        //        // If this button type flag is set
+        //        if (buttonType != DialogButtonType.None && result.Buttons.IsMaskSet(buttonType))
+        //        {
+        //            buttonTypes.Add(buttonType);
+        //        }
+        //    }
+
+        //    twoButtonSet = new GameObject[2];
+
+        //    // Find all buttons on dialog...
+        //    List<DialogButton> buttonsOnDialog = GetAllDialogButtons();
+
+        //    // Set desired buttons active and the rest inactive
+        //    SetButtonsActiveStates(buttonsOnDialog, buttonTypes.Count);
+
+        //    // Set titles and types
+        //    if (buttonTypes.Count > 0)
+        //    {
+        //        // If we have two buttons then do step 1, else 0
+        //        int step = buttonTypes.Count >= 2 ? 1 : 0;
+        //        for (int i = 0; i < buttonTypes.Count && i < 2; ++i)
+        //        {
+        //            twoButtonSet[i] = buttonsOnDialog[i + step].gameObject;
+        //            buttonsOnDialog[i + step].SetTitle(buttonTypes[i].ToString());
+        //            buttonsOnDialog[i + step].ButtonTypeEnum = buttonTypes[i];
+        //        }
+        //    }
+        //}
 
         private void SetButtonsActiveStates(List<DialogButton> buttons, int count)
         {
@@ -116,12 +143,24 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// </summary>
         protected override void SetTitleAndMessage()
         {
-            if (titleText != null)
+            //旧版本代码
+            //if (titleText != null)
+            //{
+            //    titleText.text = Result.Title;
+            //}
+
+            //if (descriptionText != null)
+            //{
+            //    descriptionText.text = Result.Message;
+            //}
+
+            //新版本代码
+            if (titleText != null && !string.IsNullOrEmpty(Result.Title))
             {
                 titleText.text = Result.Title;
             }
 
-            if (descriptionText != null)
+            if (descriptionText != null && !string.IsNullOrEmpty(Result.Message))
             {
                 descriptionText.text = Result.Message;
             }

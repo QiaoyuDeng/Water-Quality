@@ -122,6 +122,26 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// </summary>
         public abstract void DismissDialog();
 
+        ///////////////////////new definition////////////////////////
+        /// <summary>
+        /// Opens a dialog using only the prefab's internal settings (title, message, buttons, labels).
+        /// </summary>
+        /// <param name="dialogPrefab">Dialog prefab that already has all content configured.</param>
+        public static Dialog Open(GameObject dialogPrefab)
+        {
+            GameObject dialogGO = GameObject.Instantiate(dialogPrefab);
+            Dialog dialog = dialogGO.GetComponent<Dialog>();
+
+            // ✅ 创建空的 DialogResult，让它保留原 prefab 的内容
+            DialogResult result = new DialogResult
+            {
+                // 什么都不设置，让 DialogShell 用 prefab 内部设置的 title/description/button label
+            };
+
+            dialog.Launch(result);
+            return dialog;
+        }
+
         /// <summary>
         /// Instantiates a dialog and passes it a result
         /// </summary>
