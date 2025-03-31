@@ -14,6 +14,7 @@ public class TooltipController : MonoBehaviour
     public GameObject startBoard;
     public GameObject dialogPrefab;
     public MenuIntroController MenuIntroController;
+    //private float displayTime = 5f;
 
     private void Start()
     {
@@ -61,6 +62,7 @@ public class TooltipController : MonoBehaviour
                 audioSource.Play();
             }
 
+            //完成测试了之后，可以把这个时间改为音频的长度
             yield return new WaitForSeconds(audioSource.clip.length); // 等待 5 秒
             //yield return new WaitForSeconds(displayTime);
             tooltips[i].SetActive(false); // 关闭当前 Tooltip
