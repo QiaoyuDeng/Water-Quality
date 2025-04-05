@@ -24,13 +24,13 @@ public class CSVReader : MonoBehaviour
         StringReader reader = new StringReader(csvFile.text);
         string line;
 
-        // 读取表头
+        // Get headers
         if ((line = reader.ReadLine()) != null)
         {
             headers.AddRange(line.Split(','));
         }
 
-        // 读取内容
+        // Get data
         while ((line = reader.ReadLine()) != null)
         {
             string[] values = line.Split(',');
@@ -48,7 +48,7 @@ public class CSVReader : MonoBehaviour
 
     }
 
-    // ✅ 根据列名和行号获取值
+    // Get value by column name and row index
     public string GetValue(int rowIndex, string columnName)
     {
         if (rowIndex >= 0 && rowIndex < rowData.Count && rowData[rowIndex].ContainsKey(columnName))
@@ -58,29 +58,29 @@ public class CSVReader : MonoBehaviour
         return null;
     }
 
-    // ✅ 获取某列的所有行（用于绘制柱状图）
+    // Get all values of a column (for bar chart)
     public List<float> GetColumnValues(string columnName)
     {
-        Debug.Log("游戏开始");
+        Debug.Log("Game started");
         
         List<float> values = new List<float>();
 
         foreach (var row in rowData)
         {
-            Debug.Log("🧵 当前 row 的所有 key：" + string.Join(", ", row.Keys));
+            Debug.Log("Current row keys:" + string.Join(", ", row.Keys));
             if (row.ContainsKey(columnName))
             {
                 string raw = row[columnName];
-                Debug.Log($"🔍 原始值: {raw}");
+                Debug.Log($"Raw value: {raw}");
 
                 if (float.TryParse(row[columnName], out float val))
                 {
                     values.Add(val);
-                    Debug.Log($"✅ 转换成功: {val}");
+                    Debug.Log($"Conversion successful: {val}");
                 }
                 else
                 {
-                    Debug.LogWarning($"❌ 转换失败: {raw}");
+                    Debug.LogWarning($"Conversion failed: {raw}");
                     values.Add(0); // 或者跳过，或用 NaN
                 }
             }

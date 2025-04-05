@@ -14,7 +14,7 @@ public class ObjectClickable : MonoBehaviour
 
     public void OnClicked()
     {
-        Debug.Log("🟡 ObjectClickable.OnClicked() 被触发！");
+        Debug.Log("🟡 ObjectClickable.OnClicked() is activated！");
 
         menuIntro.ShowDashboard(menuIntro.GetCurrentFarmSize(),
                                 menuIntro.GetCurrentScenario(),
