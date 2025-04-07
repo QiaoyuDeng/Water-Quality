@@ -7,13 +7,14 @@ using TMPro;
 
 public class TooltipController : MonoBehaviour
 {
-    public GameObject[] tooltips; // 存放所有 Tooltip 对象
-    public AudioClip[] audioClips; // 存放音频文件
-    public AudioSource audioSource; // 音频播放器
+    public GameObject[] tooltips; // Store all Tooltip objects
+    public AudioClip[] audioClips; // Store audio files
+    public AudioSource audioSource; // Audio player
     private bool isRunning = false;
     public GameObject startBoard;
     public GameObject dialogPrefab;
     public MenuIntroController MenuIntroController;
+    public MRTKSceneTransition sceneTransition;
     //private float displayTime = 5f;
 
     private void Start()
@@ -24,7 +25,7 @@ public class TooltipController : MonoBehaviour
             tooltip.SetActive(false);
         }
 
-        // 确保 AudioSource 存在
+        // Make sure AudioSource exists
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -32,10 +33,11 @@ public class TooltipController : MonoBehaviour
 
     }
 
-    public void StartTooltipSequence() // 这个方法绑定到 Start 按钮
+    // This method is bound to the Start button
+    public void StartTooltipSequence() 
     {
         startBoard.SetActive(false);
-        if (!isRunning) // 避免重复启动
+        if (!isRunning) // Prevent multiple starts
         {
             isRunning = true;
             StartCoroutine(ShowTooltipsSequentially());
@@ -44,37 +46,54 @@ public class TooltipController : MonoBehaviour
 
     private IEnumerator ShowTooltipsSequentially()
     {
-        // 确保所有的 Tooltips 初始时隐藏
+        // Ensure all tooltips are initially hidden
         foreach (GameObject tooltip in tooltips)
         {
             tooltip.SetActive(false);
         }
 
-        // 依次显示 Tooltips
+        // Display tooltips one by one
         for (int i = 0; i < tooltips.Length; i++)
         {
-            tooltips[i].SetActive(true); // 显示当前 Tooltip
+            tooltips[i].SetActive(true); // Show current tooltip
 
-            // 播放对应的音频（如果存在）
+            // Play corresponding audio (if exists)
             if (audioClips.Length > i && audioClips[i] != null)
             {
                 audioSource.clip = audioClips[i];
                 audioSource.Play();
             }
 
-            //完成测试了之后，可以把这个时间改为音频的长度
-            yield return new WaitForSeconds(audioSource.clip.length); // 等待 5 秒
-            //yield return new WaitForSeconds(displayTime);
-            tooltips[i].SetActive(false); // 关闭当前 Tooltip
+            // After testing, this wait time can be changed to the length of the audio
+            //yield return new WaitForSeconds(audioSource.clip.length); // Wait for audio to finish
+            yield return new WaitForSeconds(1f);
+            tooltips[i].SetActive(false); // Hide current tooltip
         }
 
-        Debug.Log("准备打开对话框...");
-        // 所有 Tooltip 播放完之后，显示对话框
+        Debug.Log("Preparing to open dialog...");
+        // After all tooltips are shown, display dialog
 
         Dialog myDialog = Dialog.Open(
             dialogPrefab
         );
 
+
+        //if (myDialog != null)
+        //{
+        //    myDialog.OnClosed += result =>
+        //    {
+        //        switch (result.Result)
+        //        {
+        //            case DialogButtonType.Yes:
+        //                StartCoroutine(ShowTooltipsSequentially()); // Replay
+        //                break;
+        //            case DialogButtonType.No:
+        //                Debug.Log("MenuIntroController");
+        //                MenuIntroController.StartIntro();
+        //                break;
+        //        }
+        //    };
+        //}
 
         if (myDialog != null)
         {
@@ -87,7 +106,8 @@ public class TooltipController : MonoBehaviour
                         break;
                     case DialogButtonType.No:
                         Debug.Log("MenuIntroController");
-                        MenuIntroController.StartIntro();
+                        //MenuIntroController.StartIntro(); //菜单
+                        sceneTransition.BeginTransition();
                         break;
                 }
             };
