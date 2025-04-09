@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
@@ -38,6 +39,15 @@ public class FarmSimulator : MonoBehaviour
     
     private int currentScenario = 0;
 
+    //---------------------------------------------------------------------------------//
+    public CSVReader csvReader;  // csv reader
+    private float reuseStorageVolume = 0;
+    private float reuseOverflowPlux = 0;
+    private float pumpBackReuseRate = 0;
+
+    public bool isReadyForNext = true;
+    ////////////////////////////////////////////////////////////
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +79,7 @@ public class FarmSimulator : MonoBehaviour
         }
         
         // Start the animation for the desired scenario
-        StartCoroutine(ChooseScenario(currentScenario));
+        // StartCoroutine(ChooseScenario(currentScenario));
     }
 
     // Update is called once per frame
@@ -83,7 +93,8 @@ public class FarmSimulator : MonoBehaviour
         // Use multiple subroutines to animate the farm
         while (true)
         {
-            
+            isReadyForNext = false;
+
             // 1. fill the irrigation water plane while stopping reuse
             yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(500);
             reusePipeAnimator.StopAnimation(this);
@@ -101,8 +112,10 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.ReturnCows();
 
             // 4. fill the reuse water plane while draining the paddock and no overflow due to sufficient storage
+            //StartCoroutine(paddockScript.AnimateDrain());
+            //yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(900));
             StartCoroutine(paddockScript.AnimateDrain());
-            yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(900));
+            yield return StartCoroutine(reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux));
 
             // 5. fill the effluent water plane
             shedPipeAnimator.StartAnimation(this);
@@ -117,6 +130,8 @@ public class FarmSimulator : MonoBehaviour
             effluentPipeAnimator.StartAnimation(this);
             //overflowParticles.Stop();
             yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(1000));
+
+            isReadyForNext = true;
         }
         
     }
@@ -125,7 +140,9 @@ public class FarmSimulator : MonoBehaviour
     private IEnumerator AnimateHeavyRainfall()
     {
         while (true)
-        {       
+        {
+            isReadyForNext = false;
+
             // 1. fill the irrigation water plane
             //reusePipeAnimator.StartAnimation(this);
             yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(1900);
@@ -144,8 +161,10 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.ReturnCows();
 
             // 4. fill the reuse water plane while draining the paddock and overflow due to heavy rainfall
+            //StartCoroutine(paddockScript.AnimateDrain());
+            //yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(1200));
             StartCoroutine(paddockScript.AnimateDrain());
-            yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(1200));
+            yield return StartCoroutine(reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux));
 
             // 5. fill the effluent water plane 
             shedPipeAnimator.StartAnimation(this);
@@ -158,6 +177,8 @@ public class FarmSimulator : MonoBehaviour
             reusePipeAnimator.StartAnimation(this);
             effluentPipeAnimator.StartAnimation(this);
             yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(600));
+
+            isReadyForNext = true;
         }
     }
 
@@ -166,6 +187,8 @@ public class FarmSimulator : MonoBehaviour
     {
         while (true)
         {
+            isReadyForNext = false;
+            
             // 1. fill the irrigation water plane with limited water
             //reusePipeAnimator.StartAnimation(this);
             yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(500);
@@ -184,8 +207,10 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.ReturnCows();
 
             // 4. fill the reuse water plane while draining the paddock with limited water
+            //StartCoroutine(paddockScript.AnimateDrain());
+            //yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(500));
             StartCoroutine(paddockScript.AnimateDrain());
-            yield return StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(500));
+            yield return StartCoroutine(reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux));
 
             // 5. fill the effluent water plane with limited water
             shedPipeAnimator.StartAnimation(this);
@@ -199,8 +224,57 @@ public class FarmSimulator : MonoBehaviour
             effluentPipeAnimator.StartAnimation(this);
             yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(500));
             yield return new WaitForSeconds(3f);
+
+            isReadyForNext = true;
         }
     }
+
+    /// <summary>
+    /// animate scenario 
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator AnimateScenario()
+    {
+        isReadyForNext = false;
+
+        // 1. fill the irrigation water plane with limited water
+        yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(500);
+        reusePipeAnimator.StopAnimation(this);
+        effluentPipeAnimator.StopAnimation(this);
+
+        // 2. fill the paddock while draining the irrigation water plane
+        StartCoroutine(irrigationWaterPlaneScript.MovePlane(0));
+        yield return StartCoroutine(paddockScript.AnimateFill());
+
+        yield return cowFactory.MoveToPlane(paddock);
+
+        // 3. saturate the paddock
+        yield return StartCoroutine(paddockScript.AnimateSaturation());
+
+        yield return cowFactory.ReturnCows();
+
+        // 4. fill the reuse water plane while draining the paddock
+        StartCoroutine(paddockScript.AnimateDrain());
+        yield return StartCoroutine(reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux));
+
+        // 5. fill the effluent water plane
+        shedPipeAnimator.StartAnimation(this);
+        yield return StartCoroutine(effluentWaterPlaneScript.ChangeVolumeByAmount(300));
+        shedPipeAnimator.StopAnimation(this);
+
+        // 6. Pump water back to irrigation
+        StartCoroutine(effluentWaterPlaneScript.MovePlane(0));
+        //StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(-500));
+        StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(pumpBackReuseRate));
+        reusePipeAnimator.StartAnimation(this);
+        effluentPipeAnimator.StartAnimation(this);
+        //yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(500));
+        yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(-pumpBackReuseRate));
+        yield return new WaitForSeconds(3f);
+
+        isReadyForNext = true;
+    }
+
 
     // Reset the farm simulator to the initial state
     public void Reset()
@@ -291,6 +365,20 @@ public class FarmSimulator : MonoBehaviour
         
         return new Vector3(randomX, planeY, randomZ);
     }
+
+    ////////////////////////////////////////////////////////////
+    // player can call this method to run a step of irrigation
+    public void SetReuseValues(float volume, float overflow)
+    {
+        reuseStorageVolume = volume;
+        reuseOverflowPlux = overflow;
+    }
+
+    public void SetPumpBackReuseRate(float rate)
+    {
+        pumpBackReuseRate = rate;
+    }
+    ////////////////////////////////////////////////////////////
 }
 
 
@@ -346,5 +434,10 @@ public class MaterialAnimator
     {
         material.SetFloat(propertyName, -0.5f);
     }
+
+
+
 }
+
+
 

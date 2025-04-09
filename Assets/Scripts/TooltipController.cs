@@ -65,7 +65,7 @@ public class TooltipController : MonoBehaviour
             }
 
             // After testing, this wait time can be changed to the length of the audio
-            //yield return new WaitForSeconds(audioSource.clip.length); // Wait for audio to finish
+            // yield return new WaitForSeconds(audioSource.clip.length); // Wait for audio to finish
             yield return new WaitForSeconds(1f);
             tooltips[i].SetActive(false); // Hide current tooltip
         }

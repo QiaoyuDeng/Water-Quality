@@ -6882,6 +6882,56 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &337101259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337101261}
+  - component: {fileID: 337101260}
+  m_Layer: 0
+  m_Name: FarmController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &337101260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337101259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4513a61229a0fdf4aaaeb3aad258471b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  csvReader: {fileID: 509563675}
+  smallFarm: {fileID: 569612870}
+  mediumFarm: {fileID: 821921990}
+  largeFarm: {fileID: 1963067550}
+  rain: {fileID: 1166389982}
+  introFinished: 0
+--- !u!4 &337101261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337101259}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7226998, z: -0, w: 0.69116205}
+  m_LocalPosition: {x: -2.5111284, y: -0.8923917, z: 4.5062475}
+  m_LocalScale: {x: 0.60000014, y: 0.66024, z: 0.60000014}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &343067507
 GameObject:
   m_ObjectHideFlags: 0
@@ -10979,6 +11029,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &509563674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 509563676}
+  - component: {fileID: 509563675}
+  m_Layer: 0
+  m_Name: Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &509563675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509563674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b466297c4814843b41b7b186dfef4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  csvFile: {fileID: 4900000, guid: 980849d3fd75e2d41b7b7ca05b2ced01, type: 3}
+  headers: []
+--- !u!4 &509563676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509563674}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7226998, z: -0, w: 0.69116205}
+  m_LocalPosition: {x: -2.5111284, y: -0.8923917, z: 4.5062475}
+  m_LocalScale: {x: 0.60000014, y: 0.66024, z: 0.60000014}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &511778756
 GameObject:
   m_ObjectHideFlags: 0
@@ -12672,6 +12768,8 @@ MonoBehaviour:
   reusePipe: {fileID: 2126911551}
   shedPipe: {fileID: 785491634}
   effluentPipe: {fileID: 658770621}
+  csvReader: {fileID: 0}
+  isReadyForNext: 1
 --- !u!4 &569612871
 Transform:
   m_ObjectHideFlags: 0
@@ -20501,6 +20599,8 @@ MonoBehaviour:
   reusePipe: {fileID: 1258452471}
   shedPipe: {fileID: 328466300}
   effluentPipe: {fileID: 1205463930}
+  csvReader: {fileID: 0}
+  isReadyForNext: 1
 --- !u!114 &821921991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21592,7 +21692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139fb53de28f2e446a3f696ccbde97b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillVolume: 1500
+  fillVolume: 120
   animationSpeed: 1
   overflowParticles: {fileID: 1934389784}
   overflowPlane: {fileID: 1367468937}
@@ -28518,6 +28618,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7afadc430b6b1f40a85fd90ba67675b, type: 3}
   audioSource: {fileID: 447232130}
   dialogPrefab: {fileID: 5475465534354963241, guid: 35e5382359c221f4db7081b0e8e8927c, type: 3}
+  controller: {fileID: 337101260}
   displayTime: 3
 --- !u!65 &1160997870
 BoxCollider:
@@ -33516,7 +33617,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.73779655, y: 22.34, z: 3.42}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.42, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 267266026}
@@ -45289,7 +45390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139fb53de28f2e446a3f696ccbde97b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillVolume: 2000
+  fillVolume: 240
   animationSpeed: 1
   overflowParticles: {fileID: 1183400715}
   overflowPlane: {fileID: 2143377343}
@@ -49368,7 +49469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139fb53de28f2e446a3f696ccbde97b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillVolume: 1000
+  fillVolume: 60
   animationSpeed: 1
   overflowParticles: {fileID: 2007240436}
   overflowPlane: {fileID: 458549050}
@@ -61615,6 +61716,8 @@ MonoBehaviour:
   reusePipe: {fileID: 1519014243}
   shedPipe: {fileID: 791990291}
   effluentPipe: {fileID: 576615840}
+  csvReader: {fileID: 0}
+  isReadyForNext: 1
 --- !u!4 &1963067551
 Transform:
   m_ObjectHideFlags: 0
@@ -73318,5 +73421,7 @@ SceneRoots:
   - {fileID: 1958386552}
   - {fileID: 1918214064}
   - {fileID: 1552711003}
+  - {fileID: 509563676}
+  - {fileID: 337101261}
   - {fileID: 2051655048}
   - {fileID: 1160997873}

@@ -79,78 +79,101 @@ public class CowFactory : MonoBehaviour
         }
     }
 
+    //public IEnumerator MoveToPlane(GameObject plane)
+    //{
+    //    // Move cows to new plane
+    //    foreach (GameObject cow in cows.Keys)
+    //    {
+    //        // Get agent of Cow
+    //        NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
+
+    //        // Get random point on new plane
+    //        Vector3 randomPoint = GetRandomPointOnPlane(plane);
+
+    //        // Move cow to random point
+    //        agent.SetDestination(randomPoint);
+    //    }
+
+    //    // Check if all cows have reached their destination
+    //    bool allReached = false;
+    //    float tolerance = 0.01f;
+    //    float startTime = Time.time;
+
+    //    while (!allReached && Time.time - startTime < 10f)
+    //    {
+    //        allReached = true;
+
+    //        foreach (GameObject cow in cows.Keys)
+    //        {
+    //            NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
+
+    //            if (agent.pathPending || agent.remainingDistance > tolerance)
+    //            {
+    //                allReached = false;
+    //                break;
+    //            }
+    //        }
+
+    //        yield return null;
+    //    }
+    //}
+
+    //public IEnumerator ReturnCows()
+    //{
+    //    // Move cows to start point
+    //    foreach ((GameObject cow, Vector3 spawnPoint) in cows)
+    //    {
+    //        // Get agent of Cow
+    //        NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
+
+    //        // Move cow to spawn point
+    //        agent.SetDestination(spawnPoint);
+    //    }
+
+    //    // Check if all cows have reached their destination
+    //    bool allReached = false;
+    //    float tolerance = 0.5f;
+    //    float startTime = Time.time;
+
+    //    while (!allReached && Time.time - startTime < 3f)
+    //    {
+    //        allReached = true;
+
+    //        foreach (GameObject cow in cows.Keys)
+    //        {
+    //            NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
+
+    //            if (agent.pathPending || agent.remainingDistance > tolerance)
+    //            {
+    //                allReached = false;
+    //                break;
+    //            }
+    //        }
+
+    //        yield return null;
+    //    }
+    //}
+
     public IEnumerator MoveToPlane(GameObject plane)
     {
-        // Move cows to new plane
         foreach (GameObject cow in cows.Keys)
         {
-            // Get agent of Cow
             NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
-
-            // Get random point on new plane
             Vector3 randomPoint = GetRandomPointOnPlane(plane);
-
-            // Move cow to random point
             agent.SetDestination(randomPoint);
         }
 
-        // Check if all cows have reached their destination
-        bool allReached = false;
-        float tolerance = 0.01f;
-        float startTime = Time.time;
-
-        while (!allReached && Time.time - startTime < 10f)
-        {
-            allReached = true;
-
-            foreach (GameObject cow in cows.Keys)
-            {
-                NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
-
-                if (agent.pathPending || agent.remainingDistance > tolerance)
-                {
-                    allReached = false;
-                    break;
-                }
-            }
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(3f);
     }
 
     public IEnumerator ReturnCows()
     {
-        // Move cows to start point
         foreach ((GameObject cow, Vector3 spawnPoint) in cows)
         {
-            // Get agent of Cow
             NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
-
-            // Move cow to spawn point
             agent.SetDestination(spawnPoint);
         }
-
-        // Check if all cows have reached their destination
-        bool allReached = false;
-        float tolerance = 0.5f;
-        float startTime = Time.time;
-
-        while (!allReached && Time.time - startTime < 10f)
-        {
-            allReached = true;
-
-            foreach (GameObject cow in cows.Keys)
-            {
-                NavMeshAgent agent = cow.GetComponent<NavMeshAgent>();
-
-                if (agent.pathPending || agent.remainingDistance > tolerance)
-                {
-                    allReached = false;
-                    break;
-                }
-            }
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(3f);
     }
+
 }

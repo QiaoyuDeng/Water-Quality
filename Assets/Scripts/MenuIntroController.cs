@@ -12,21 +12,21 @@ public class MenuIntroController : MonoBehaviour
     public GameObject periodDropMenu;
     public CSVReader csvReader;
 
-    // 把所有菜单放到数组中，方便批量处理
+    // Put all menus into an array for batch processing
     private GameObject[] allDropdowns;
     private string currentFarmSize = "5ML";
     private string currentScenario = "LightRainfall";
     private string currentTargetName = "IrrigationChannel";
 
-    public DataDisplay idatadisplay; // 拖入 Inspector 中
+    public DataDisplay idatadisplay;
 
-    //控制dashboard显示
+    // Control the dashboard display
     public GameObject dataBoard;
     public TMPro.TMP_Text titleText;
     public TMPro.TMP_Text descriptionText;
     public TMPro.TMP_Text unitText;
-    public GameObject barChartObject;  // 在 Inspector 中拖入你的图表
-    private BarChart barChart;         // 真正用的组件
+    public GameObject barChartObject;  // Drag your chart into the Inspector
+    private BarChart barChart;         // Actual components in use
 
     //public GameObject[] tooltips;
     //public AudioClip[] audioClips;
@@ -34,7 +34,7 @@ public class MenuIntroController : MonoBehaviour
 
     void Start()
     {
-        // 初始化下拉菜单列表
+        // Initialize the dropdown menu list
         allDropdowns = new GameObject[] { farmsizeDropMenu, scenaryDropMenu, periodDropMenu };
         csvReader.ReadCSV();
     }
@@ -46,14 +46,14 @@ public class MenuIntroController : MonoBehaviour
         //StartCoroutine(PlayMenuIntro());
     }
 
-    // 点击按钮时触发：显示对应的菜单，隐藏其他
+    // Triggered when the button is clicked: Show the corresponding menu, hide others
     public void ToggleDropdown(GameObject targetDropdown)
     {
         foreach (GameObject dropdown in allDropdowns)
         {
             if (dropdown != null)
             {
-                // 只显示目标菜单，其他隐藏
+                // Only show the target menu, hide others
                 dropdown.SetActive(dropdown == targetDropdown && !dropdown.activeSelf);
             }
         }
@@ -73,19 +73,18 @@ public class MenuIntroController : MonoBehaviour
     public void OnTargetSelected(string target)
     {
         currentTargetName = target;
-        UpdateDataColumn(); // 联动更新
+        UpdateDataColumn(); // renew the data column
     }
 
     private void UpdateDataColumn()
     {
-        string col = $"{currentFarmSize}_{currentScenario}_{currentTargetName}"; // 改了名字！
+        string col = $"{currentFarmSize}_{currentScenario}_{currentTargetName}"; 
         idatadisplay.columnName = col;
-        //Debug.Log("🟢 [UpdateBarChartForWeek] 函数开始执行");
-        idatadisplay.RebindSliderEvent(); // 👈 加这行
+        idatadisplay.RebindSliderEvent(); 
         idatadisplay.RefreshDisplay();
         idatadisplay.SetBarChart(barChartObject.GetComponent<BarChart>());
         idatadisplay.UpdateBarChartForWeek();
-        Debug.Log("✅ 当前列名更新为: " + col);
+        Debug.Log("Current column name updated to: " + col);
     }
 
     public string GetCurrentFarmSize()
@@ -103,27 +102,27 @@ public class MenuIntroController : MonoBehaviour
         return currentTargetName;
     }
 
-    //这个只更显dashboard上的固定内容，不更新数据。
+    // This only updates the fixed content (chart) on the dashboard, not the data.
     public void ShowDashboard(string farmSize, string scenario, string targetName, string title, string description, string unit)
-    {    
+    {
 
-        // 设置当前列名组合
+        // Set the current column name combination
         currentFarmSize = farmSize;
         currentScenario = scenario;
         currentTargetName = targetName;
 
         barChart = barChartObject.GetComponent<BarChart>();
 
-        // 更新数据列
+        // Update data columns
         UpdateDataColumn();
 
-        // 更新标题/描述
+        // Update title/description
         if (titleText != null) titleText.text = title;
         if (descriptionText != null) descriptionText.text = description;
         if (unitText != null) unitText.text = unit;
 
-        Debug.Log("✅ 显示 Dashboard: " + title);
-        // 面板
+        Debug.Log("Show Dashboard: " + title);
+        // Panel
         if (dataBoard != null) dataBoard.SetActive(true);
     }
 
@@ -149,6 +148,6 @@ public class MenuIntroController : MonoBehaviour
     //        tooltips[i].SetActive(false);
     //    }
 
-    //    Debug.Log("✅ Near Menu 介绍完毕！");
+    //    Debug.Log("✅ Near Menu Intro Completed！");
     //}
 }

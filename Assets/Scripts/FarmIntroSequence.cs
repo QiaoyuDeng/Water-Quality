@@ -10,6 +10,7 @@ public class FarmIntroSequence : MonoBehaviour
     public AudioClip[] introAudioClips;           // Audio clips for the introduction (4 parts)
     public AudioSource audioSource;               // Audio source to play the clips
     public GameObject dialogPrefab;
+    public FarmController controller;            // Reference to the FarmController to play animations
 
     public float displayTime = 3f;                // Duration for each highligh
     private Material[] originalMaterials;         // Store original materials
@@ -86,9 +87,9 @@ public class FarmIntroSequence : MonoBehaviour
                         StartCoroutine(HighlightFarmsSequentially()); // Replay
                         break;
                     case DialogButtonType.No:
-                        Debug.Log("MenuIntroController");
+                        Debug.Log("Start Simulation");
                         //start simulation
-                        //sceneTransition.BeginTransition();
+                        controller.MarkIntroAsFinished();
                         break;
                 }
             };

@@ -24,7 +24,6 @@ public class TableManager : MonoBehaviour
         rain = rainObject.GetComponent<ParticleSystem>();
         //Debug.Log("Rain system found: " + (rain != null));
         //var emission = rain.emission;
-        //emission是一个struct（结构体），在C#里struct是值类型,必须通过拷贝再赋值的方式修改它的属性.
         //emission.enabled = true;
 
     }

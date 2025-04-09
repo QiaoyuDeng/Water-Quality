@@ -144,4 +144,54 @@ public class AnimatePlane : MonoBehaviour
             StartCoroutine(overflowIrrigation.StopOverflow());
         }
     }
+
+    /// <summary>
+    /// //////////////////////////////////////////////
+    /// </summary>
+    /// <param name="storageVolume"></param>
+    /// <param name="overflowPlux"></param>
+    /// <returns></returns>
+    // sets the overflow directly without moving the plane
+    public IEnumerator SetVolumeAndMove(float storageVolume, float overflowPlux)
+    {
+        currentVolume = Mathf.Clamp(storageVolume, 0, fillVolume);
+
+        float startHeight = transform.localPosition.y;
+        float targetHeight = Mathf.Lerp(channelBedHeight, floorHeight, Mathf.Clamp01(currentVolume / fillVolume));
+        Vector3 newLocation = transform.localPosition;
+
+        float duration = 2f; // All farms use the same duration
+        float elapsed = 0f;
+
+        // Smoothly move the object to the target height over the specified duration
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration); // Normalize from 0 to 1
+            float currentHeight = Mathf.Lerp(startHeight, targetHeight, t); // Linear interpolation
+            newLocation.y = currentHeight;
+            transform.localPosition = newLocation;
+            yield return null;
+        }
+
+        // Final position alignment
+        newLocation.y = targetHeight;
+        transform.localPosition = newLocation;
+
+        // Overflow check and particle effect handling
+        if (overflowPlux > 0 && overflowParticles != null)
+        {
+            overflowParticles.Play();
+        }
+        else if (overflowParticles != null)
+        {
+            overflowParticles.Stop();
+        }
+
+        yield return null;
+    }
+
+
+
+
 }
