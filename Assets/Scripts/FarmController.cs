@@ -13,10 +13,18 @@ public class FarmController : MonoBehaviour
     [Header("Rain Particle Control")]
     public ParticleSystem rain;
 
+    [Header("Rain Audio Clips")]
+    public AudioClip lightRainAudio;
+    public AudioClip moderateRainAudio;
+    public AudioClip heavyRainAudio;
+    //public AudioSource audioSource;
+
     private string[] rainfallScenarios = { "LightRainfall", "ModerateRainfall", "HeavyRainfall" };
     private int stepsPerScenario = 7;
 
     public bool introFinished = false; // Used to control whether to play the animation
+
+    public ScenarioOverlayController overlayController; // Reference to the overlay controller
 
 
     private IEnumerator Start()
@@ -33,6 +41,27 @@ public class FarmController : MonoBehaviour
 
         foreach (string rain in rainfallScenarios)
         {
+
+            if (overlayController != null)
+            {
+                string rainLabel = rain switch
+                {
+                    "LightRainfall" => "Scenario 1: Light Rainfall",
+                    "ModerateRainfall" => "Scenario 2: Moderate Rainfall",
+                    "HeavyRainfall" => "Scenario 3: Heavy Rainfall",
+                    _ => "Scenario: Unknown"
+                };
+
+                AudioClip clip = rain switch
+                {
+                    "LightRainfall" => lightRainAudio,
+                    "ModerateRainfall" => moderateRainAudio,
+                    "HeavyRainfall" => heavyRainAudio,
+                    _ => null
+                };
+
+                yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
+            }
             // Set the rain scenario
             SetRainByScenario(rain); 
 

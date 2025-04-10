@@ -1,18 +1,60 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScenarioOverlayController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public CanvasGroup overlayGroup;            // Drag the CanvasGroup from the panel
+    public TextMeshProUGUI scenarioText;        // Drag the TMP Text component
+    public AudioSource audioSource;             // Play audio when the overlay is shown
 
-    // Update is called once per frame
-    void Update()
+    public float fadeDuration = 1.5f;           // Duration for fade in/out
+    //public float showTime = 2f;                 // Duration to show the text
+
+    public IEnumerator ShowScenarioText(string textToShow, AudioClip clip)
     {
-        
+        float showTime = clip.length;
+
+
+        // Make sure the GameObject is active
+        gameObject.SetActive(true);
+        overlayGroup.alpha = 0f;
+        scenarioText.text = textToShow;
+
+        Debug.Log($"Will play clip: {(clip != null ? clip.name : "null")}");
+        Debug.Log($"Playing clip: {clip.name}, duration: {clip.length}s");
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+            Debug.Log($"Playing clip: {clip.name}, duration: {clip.length}s");
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or Clip is null");
+        }
+
+
+        // Fade in
+        for (float t = 0f; t < fadeDuration; t += Time.deltaTime)
+        {
+            overlayGroup.alpha = Mathf.Lerp(0f, 1f, t / fadeDuration);
+            yield return null;
+        }
+        overlayGroup.alpha = 1f;
+
+        // Wait before fading out
+        yield return new WaitForSeconds(showTime);
+
+        // Fade out
+        for (float t = 0f; t < fadeDuration; t += Time.deltaTime)
+        {
+            overlayGroup.alpha = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            yield return null;
+        }
+        overlayGroup.alpha = 0f;
+
+        // ✅ Hide the overlay panel after fade-out
+        gameObject.SetActive(false);
     }
 }
