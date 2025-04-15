@@ -15,6 +15,9 @@ public class FarmIntroSequence : MonoBehaviour
     public float displayTime = 3f;                // Duration for each highligh
     private Material[] originalMaterials;         // Store original materials
 
+    [Header("Testing Options")]
+    public bool skipAudio = false; // If true, skip audio wait and use 1s per clip 
+
     void Start()
     {
         // Store the original material of each floor object
@@ -59,7 +62,9 @@ public class FarmIntroSequence : MonoBehaviour
             {
                 audioSource.clip = introAudioClips[i + 1];
                 audioSource.Play();
-                yield return new WaitForSeconds(audioSource.clip.length);  // Wait for audio to finish
+                // yield return new WaitForSeconds(audioSource.clip.length);  // Wait for audio to finish
+                yield return new WaitForSeconds(skipAudio ? 1f : audioSource.clip.length);
+
             }
             else
             {

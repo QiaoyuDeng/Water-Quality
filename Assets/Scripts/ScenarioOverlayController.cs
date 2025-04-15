@@ -11,9 +11,14 @@ public class ScenarioOverlayController : MonoBehaviour
     public float fadeDuration = 1.5f;           // Duration for fade in/out
     //public float showTime = 2f;                 // Duration to show the text
 
+
+    [Header("Testing Options")]
+    public bool skipAudio = false; // If true, override clip length to 1s for testing purposes
+
+
     public IEnumerator ShowScenarioText(string textToShow, AudioClip clip)
     {
-        float showTime = clip.length;
+        float showTime = skipAudio ? 1f : clip.length;
 
 
         // Make sure the GameObject is active
@@ -23,11 +28,10 @@ public class ScenarioOverlayController : MonoBehaviour
 
         Debug.Log($"Will play clip: {(clip != null ? clip.name : "null")}");
         Debug.Log($"Playing clip: {clip.name}, duration: {clip.length}s");
-        if (audioSource != null && clip != null)
+        if (!skipAudio && audioSource != null && clip != null)
         {
             audioSource.clip = clip;
             audioSource.Play();
-            Debug.Log($"Playing clip: {clip.name}, duration: {clip.length}s");
         }
         else
         {
@@ -42,7 +46,7 @@ public class ScenarioOverlayController : MonoBehaviour
             yield return null;
         }
         overlayGroup.alpha = 1f;
-
+         
         // Wait before fading out
         yield return new WaitForSeconds(showTime);
 
