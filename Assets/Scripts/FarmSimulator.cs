@@ -240,106 +240,6 @@ public class FarmSimulator : MonoBehaviour
     /// <returns></returns>
     public IEnumerator AnimateScenario()
     {
-        //isReadyForNext = false;
-
-        //// 1. fill the irrigation water plane with limited water
-        //narrationManager.PlayNarration(currentScenarioId, currentDay, 1);
-        //irrigationWaterPlaneScript.ChangeVolumeByAmount(500);
-        //reusePipeAnimator.StopAnimation(this);
-        //effluentPipeAnimator.StopAnimation(this);
-
-        //// 2. fill the paddock while draining the irrigation water plane
-        //narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 2);
-        //StartCoroutine(irrigationWaterPlaneScript.MovePlane(0));
-        //yield return StartCoroutine(paddockScript.AnimateFill());
-
-        //yield return cowFactory.MoveToPlane(paddock);
-
-        //// 3. saturate the paddock
-        //narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 3);
-        //yield return StartCoroutine(paddockScript.AnimateSaturation());
-
-        //yield return cowFactory.ReturnCows();
-
-        //// 4. fill the reuse water plane while draining the paddock
-        //narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 4);
-        //StartCoroutine(paddockScript.AnimateDrain());
-        //yield return StartCoroutine(reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux));
-
-        //// 5. fill the effluent water plane
-        //narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 5);
-        //shedPipeAnimator.StartAnimation(this);
-        //yield return StartCoroutine(effluentWaterPlaneScript.ChangeVolumeByAmount(300));
-        //shedPipeAnimator.StopAnimation(this);
-
-        //// 6. Pump water back to irrigation
-
-        //narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 6);
-        //StartCoroutine(effluentWaterPlaneScript.MovePlane(0));
-        ////StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(-500));
-        //StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(pumpBackReuseRate));
-        //reusePipeAnimator.StartAnimation(this);
-        //effluentPipeAnimator.StartAnimation(this);
-        ////yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(500));
-        //yield return StartCoroutine(irrigationWaterPlaneScript.ChangeVolumeByAmount(-pumpBackReuseRate));
-        //yield return new WaitForSeconds(3f);
-        //isReadyForNext = true;
-
-
-
-        // version 2----------------------------------------------------------------------------------------------//
-        //isReadyForNext = false;
-
-        //// Step 1: Fill irrigation water plane
-        //yield return StartCoroutine(WaitForBoth(
-        //    irrigationWaterPlaneScript.ChangeVolumeByAmount(500),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 1)
-        //));
-        //reusePipeAnimator.StopAnimation(this);
-        //effluentPipeAnimator.StopAnimation(this);
-
-        //// Step 2: Fill paddock while draining irrigation
-        //StartCoroutine(irrigationWaterPlaneScript.MovePlane(0));
-        //yield return StartCoroutine(WaitForBoth(
-        //    paddockScript.AnimateFill(),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 2)
-        //));
-        //yield return cowFactory.MoveToPlane(paddock);
-
-        //// Step 3: Saturate paddock
-        //yield return StartCoroutine(WaitForBoth(
-        //    RunBoth(paddockScript.AnimateSaturation(), cowFactory.ReturnCows()),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 3)
-        //));
-
-        //// Step 4: Fill reuse water plane while draining paddock
-        //StartCoroutine(paddockScript.AnimateDrain());
-        //yield return StartCoroutine(WaitForBoth(
-        //    reuseWaterPlaneScript.SetVolumeAndMove(reuseStorageVolume, reuseOverflowPlux),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 4)
-        //));
-
-        //// Step 5: Fill effluent pond
-        //shedPipeAnimator.StartAnimation(this);
-        //yield return StartCoroutine(WaitForBoth(
-        //    effluentWaterPlaneScript.ChangeVolumeByAmount(300),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 5)
-        //));
-        //shedPipeAnimator.StopAnimation(this);
-
-        //// Step 6: Pump water back to irrigation
-        //StartCoroutine(effluentWaterPlaneScript.MovePlane(0));
-        //StartCoroutine(reuseWaterPlaneScript.ChangeVolumeByAmount(pumpBackReuseRate));
-        //reusePipeAnimator.StartAnimation(this);
-        //effluentPipeAnimator.StartAnimation(this);
-        //yield return StartCoroutine(WaitForBoth(
-        //    irrigationWaterPlaneScript.ChangeVolumeByAmount(-pumpBackReuseRate),
-        //    narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 6)
-        //));
-
-        //isReadyForNext = true;
-        //yield return new WaitForSeconds(3f);
-
 
         // version 3----------------------------------------------------------------------------------------------//
         isReadyForNext = false;
@@ -353,9 +253,19 @@ public class FarmSimulator : MonoBehaviour
         isReadyForNext = true;
     }
 
+    public IEnumerator AnimateScenarioSilent()
+    {
+        isReadyForNext = false;
+        Debug.Log($"{this.name}: Running animation");
+        yield return StartCoroutine(RunFullAnimationSequence());
+        isReadyForNext = true;
+    }
+
 
     private IEnumerator RunFullAnimationSequence()
     {
+        Debug.Log($"{this.name}: Running animation");
+
         // Step 1
         yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(500);
         reusePipeAnimator.StopAnimation(this);

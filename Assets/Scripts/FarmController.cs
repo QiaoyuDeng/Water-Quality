@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.UI;
+using TMPro;
 
 public class FarmController : MonoBehaviour
 {
@@ -17,34 +19,53 @@ public class FarmController : MonoBehaviour
     public AudioClip lightRainAudio;
     public AudioClip moderateRainAudio;
     public AudioClip heavyRainAudio;
-    //public AudioSource audioSource;
+
+    [Header("Overlay & Control")]
+    public ScenarioOverlayController overlayController;
+    public PinchSlider daySlider;
+    public PlayNarrationManager narrationManager;
+    public TextMeshProUGUI dayLabel;
+    public GameObject sliderGroup;
 
     private string[] rainfallScenarios = { "LightRainfall", "ModerateRainfall", "HeavyRainfall" };
     private int stepsPerScenario = 7;
+    private int currentScenarioIndex = 0;
+    private int currentDay = -1;
+    private bool isUpdatingSlider = false;
+    private bool isAutoPlaying = false;
 
-    public bool introFinished = false; // Used to control whether to play the animation
-
-    public ScenarioOverlayController overlayController; // Reference to the overlay controller
-
+    public bool introFinished = false;
 
     private IEnumerator Start()
     {
         csvReader.ReadCSV();
 
-        // Fix the pump back reuse rate
-        smallFarm.SetPumpBackReuseRate(-5);   // 5ML
-        mediumFarm.SetPumpBackReuseRate(-10); // 10ML
-        largeFarm.SetPumpBackReuseRate(-20);  // 20ML
+        smallFarm.SetPumpBackReuseRate(-5);
+        mediumFarm.SetPumpBackReuseRate(-10);
+        largeFarm.SetPumpBackReuseRate(-20);
 
-        // Wait for the introduction phase to finish
+        if (daySlider != null)
+        {
+            daySlider.OnValueUpdated.AddListener((SliderEventData data) =>
+            {
+                OnSliderChanged(data.NewValue);
+            });
+        }
+
         yield return new WaitUntil(() => introFinished);
 
+        if (sliderGroup != null)
+        {
+            sliderGroup.SetActive(true);
+        }
+
+        isAutoPlaying = true;
 
         for (int scenarioIndex = 0; scenarioIndex < rainfallScenarios.Length; scenarioIndex++)
         {
+            currentScenarioIndex = scenarioIndex;
             string rain = rainfallScenarios[scenarioIndex];
 
-            // Show scenario label and play scenario-specific intro audio
             if (overlayController != null)
             {
                 string rainLabel = rain switch
@@ -63,191 +84,113 @@ public class FarmController : MonoBehaviour
                     _ => null
                 };
 
+                Debug.Log($"🎬 Showing rain overlay: {rainLabel}, clip: {(clip != null ? clip.name : "null")}");
                 yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
+                Debug.Log("✅ Finished rain overlay");
             }
 
-            // Configure rain particle system according to scenario
+            Debug.Log("🌧️ Starting rain visual effect");
             SetRainByScenario(rain);
 
-            // Read CSV column names for each farm scale
-            string overflowColSmall = $"5ML_{rain}_OverflowPlux";
-            string overflowColMedium = $"10ML_{rain}_OverflowPlux";
-            string overflowColLarge = $"20ML_{rain}_OverflowPlux";
-
-            string volumeColSmall = $"5ML_{rain}_StorageVolume";
-            string volumeColMedium = $"10ML_{rain}_StorageVolume";
-            string volumeColLarge = $"20ML_{rain}_StorageVolume";
-
-            // Extract overflow and volume data from CSV
-            List<float> smallOverflow = csvReader.GetColumnValues(overflowColSmall);
-            List<float> mediumOverflow = csvReader.GetColumnValues(overflowColMedium);
-            List<float> largeOverflow = csvReader.GetColumnValues(overflowColLarge);
-
-            List<float> smallVolume = csvReader.GetColumnValues(volumeColSmall);
-            List<float> mediumVolume = csvReader.GetColumnValues(volumeColMedium);
-            List<float> largeVolume = csvReader.GetColumnValues(volumeColLarge);
-
-            // Loop through 7 simulation days
-            for (int i = 0; i < stepsPerScenario; i++)
-            {
-                yield return new WaitUntil(() =>
-                    smallFarm.isReadyForNext &&
-                    mediumFarm.isReadyForNext &&
-                    largeFarm.isReadyForNext);
-
-                // Pass scenario and day info to enable correct voice narration
-                smallFarm.currentScenarioId = scenarioIndex;
-                smallFarm.currentDay = i;
-
-                mediumFarm.currentScenarioId = scenarioIndex;
-                mediumFarm.currentDay = i;
-
-                largeFarm.currentScenarioId = scenarioIndex;
-                largeFarm.currentDay = i;
-
-                // Assign overflow and volume values for the current day
-                smallFarm.SetReuseValues(smallVolume[i], smallOverflow[i]);
-                mediumFarm.SetReuseValues(mediumVolume[i], mediumOverflow[i]);
-                largeFarm.SetReuseValues(largeVolume[i], largeOverflow[i]);
-
-                // Define values for logging
-                float so = smallOverflow[i];
-                float mo = mediumOverflow[i];
-                float lo = largeOverflow[i];
-
-                // Debug log for overflow values
-                Debug.Log($"Scenario: {rain}, Day {i + 1} | OverflowPlux => Small: {so}, Medium: {mo}, Large: {lo}");
-
-                // Start animations for each farm
-                smallFarm.StartCoroutine(smallFarm.AnimateScenario());
-                mediumFarm.StartCoroutine(mediumFarm.AnimateScenario());
-                largeFarm.StartCoroutine(largeFarm.AnimateScenario());
-            }
+            yield return StartCoroutine(PlayFromDay(0));
         }
 
-
-        //foreach (string rain in rainfallScenarios)
-        //{
-
-        //    if (overlayController != null)
-        //    {
-        //        string rainLabel = rain switch
-        //        {
-        //            "LightRainfall" => "Scenario 1: Light Rainfall",
-        //            "ModerateRainfall" => "Scenario 2: Moderate Rainfall",
-        //            "HeavyRainfall" => "Scenario 3: Heavy Rainfall",
-        //            _ => "Scenario: Unknown"
-        //        };
-
-        //        AudioClip clip = rain switch
-        //        {
-        //            "LightRainfall" => lightRainAudio,
-        //            "ModerateRainfall" => moderateRainAudio,
-        //            "HeavyRainfall" => heavyRainAudio,
-        //            _ => null
-        //        };
-
-        //        yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
-        //    }
-        //    // Set the rain scenario
-        //    SetRainByScenario(rain); 
-
-        //    string overflowColSmall = $"5ML_{rain}_OverflowPlux";
-        //    string overflowColMedium = $"10ML_{rain}_OverflowPlux";
-        //    string overflowColLarge = $"20ML_{rain}_OverflowPlux";
-
-        //    string volumeColSmall = $"5ML_{rain}_StorageVolume";
-        //    string volumeColMedium = $"10ML_{rain}_StorageVolume";
-        //    string volumeColLarge = $"20ML_{rain}_StorageVolume";
-
-        //    List<float> smallOverflow = csvReader.GetColumnValues(overflowColSmall);
-        //    List<float> mediumOverflow = csvReader.GetColumnValues(overflowColMedium);
-        //    List<float> largeOverflow = csvReader.GetColumnValues(overflowColLarge);
-
-        //    List<float> smallVolume = csvReader.GetColumnValues(volumeColSmall);
-        //    List<float> mediumVolume = csvReader.GetColumnValues(volumeColMedium);
-        //    List<float> largeVolume = csvReader.GetColumnValues(volumeColLarge);
-
-
-        //    for (int scenarioIndex = 0; scenarioIndex < rainfallScenarios.Length; scenarioIndex++)
-        //    {
-        //        string rainType = rainfallScenarios[scenarioIndex];
-
-        //        // ... Scenario label and rain effect setup code here ...
-        //        // 7 days of simulation
-        //        for (int i = 0; i < stepsPerScenario; i++)
-        //        {
-        //            yield return new WaitUntil(() =>
-        //                smallFarm.isReadyForNext &&
-        //                mediumFarm.isReadyForNext &&
-        //                largeFarm.isReadyForNext);
-
-        //            // Set voice narration params
-        //            smallFarm.currentScenarioId = scenarioIndex;
-        //            smallFarm.currentDay = i;
-
-        //            mediumFarm.currentScenarioId = scenarioIndex;
-        //            mediumFarm.currentDay = i;
-
-        //            largeFarm.currentScenarioId = scenarioIndex;
-        //            largeFarm.currentDay = i;
-
-        //            // Set water and overflow values
-        //            smallFarm.SetReuseValues(smallVolume[i], smallOverflow[i]);
-        //            mediumFarm.SetReuseValues(mediumVolume[i], mediumOverflow[i]);
-        //            largeFarm.SetReuseValues(largeVolume[i], largeOverflow[i]);
-
-        //            // Run animation
-        //            smallFarm.StartCoroutine(smallFarm.AnimateScenario());
-        //            mediumFarm.StartCoroutine(mediumFarm.AnimateScenario());
-        //            largeFarm.StartCoroutine(largeFarm.AnimateScenario());
-        //        }
-        //    }
-
-
-        //    //for (int i = 0; i < stepsPerScenario; i++)
-        //    //{
-
-        //    //    yield return new WaitUntil(() =>
-        //    //        smallFarm.isReadyForNext &&
-        //    //        mediumFarm.isReadyForNext &&
-        //    //        largeFarm.isReadyForNext);
-
-        //    //    float so = GetSafeValue(smallOverflow, i, 0);
-        //    //    float mo = GetSafeValue(mediumOverflow, i, 0);
-        //    //    float lo = GetSafeValue(largeOverflow, i, 0);
-
-        //    //    float sv = GetSafeValue(smallVolume, i, 0);
-        //    //    float mv = GetSafeValue(mediumVolume, i, 0);
-        //    //    float lv = GetSafeValue(largeVolume, i, 0);
-
-        //    //    Debug.Log($"Scenario: {rain}, Day {i + 1} | OverflowPlux => Small: {so}, Medium: {mo}, Large: {lo}");
-
-        //    //    smallFarm.SetReuseValues(sv, so);
-        //    //    mediumFarm.SetReuseValues(mv, mo);
-        //    //    largeFarm.SetReuseValues(lv, lo);
-
-        //    //    // play animation
-        //    //    smallFarm.StartCoroutine(smallFarm.AnimateScenario());
-        //    //    mediumFarm.StartCoroutine(mediumFarm.AnimateScenario());
-        //    //    largeFarm.StartCoroutine(largeFarm.AnimateScenario());
-
-        //    //}
-        //}
+        isAutoPlaying = false;
     }
 
-    private float GetSafeValue(List<float> data, int index, float fallback)
+    public void OnSliderChanged(float value)
     {
-        return (data != null && index < data.Count) ? data[index] : fallback;
+        if (isAutoPlaying || isUpdatingSlider) return;
+
+        float snapped = Mathf.Round(value * 6) / 6f;
+        int selectedDay = Mathf.Clamp(Mathf.RoundToInt(snapped * 6), 0, 6);
+
+        if (selectedDay != currentDay)
+        {
+            isUpdatingSlider = true;
+            daySlider.SliderValue = snapped;
+
+            currentDay = selectedDay;
+            UpdateSliderFromPlayback(currentDay);
+            StopAllCoroutines();
+            isAutoPlaying = false;
+            StartCoroutine(PlayFromDay(currentDay));
+            isUpdatingSlider = false;
+        }
     }
 
-    // Call this method from FarmIntroSequence
+    public IEnumerator PlayFromDay(int startDay)
+    {
+        string rain = rainfallScenarios[currentScenarioIndex];
+        SetRainByScenario(rain);
+
+        List<float> smallOverflow = csvReader.GetColumnValues($"5ML_{rain}_OverflowPlux");
+        List<float> mediumOverflow = csvReader.GetColumnValues($"10ML_{rain}_OverflowPlux");
+        List<float> largeOverflow = csvReader.GetColumnValues($"20ML_{rain}_OverflowPlux");
+
+        List<float> smallVolume = csvReader.GetColumnValues($"5ML_{rain}_StorageVolume");
+        List<float> mediumVolume = csvReader.GetColumnValues($"10ML_{rain}_StorageVolume");
+        List<float> largeVolume = csvReader.GetColumnValues($"20ML_{rain}_StorageVolume");
+
+        for (int day = startDay; day < stepsPerScenario; day++)
+        {
+            yield return new WaitUntil(() =>
+                smallFarm.isReadyForNext &&
+                mediumFarm.isReadyForNext &&
+                largeFarm.isReadyForNext);
+
+            currentDay = day;
+            UpdateSliderFromPlayback(day);
+
+            smallFarm.SetReuseValues(smallVolume[day], smallOverflow[day]);
+            mediumFarm.SetReuseValues(mediumVolume[day], mediumOverflow[day]);
+            largeFarm.SetReuseValues(largeVolume[day], largeOverflow[day]);
+
+            smallFarm.currentScenarioId = currentScenarioIndex;
+            mediumFarm.currentScenarioId = currentScenarioIndex;
+            largeFarm.currentScenarioId = currentScenarioIndex;
+
+            smallFarm.currentDay = day;
+            mediumFarm.currentDay = day;
+            largeFarm.currentDay = day;
+
+            Debug.Log($"Scenario: {rain}, Day {day + 1} | OverflowPlux => Small: {smallOverflow[day]}, Medium: {mediumOverflow[day]}, Large: {largeOverflow[day]}");
+
+            StartCoroutine(narrationManager.PlayNarrationAndWait(currentScenarioIndex, day, 0));
+
+            StartCoroutine(smallFarm.AnimateScenarioSilent());
+            StartCoroutine(mediumFarm.AnimateScenarioSilent());
+            StartCoroutine(largeFarm.AnimateScenarioSilent());
+
+            //yield return new WaitForSeconds(2f);
+            yield return new WaitUntil(() =>
+                smallFarm.isReadyForNext &&
+                mediumFarm.isReadyForNext &&
+                largeFarm.isReadyForNext &&
+                !narrationManager.audioSource.isPlaying
+            );
+        }
+    }
+
+
+
+    private void UpdateSliderFromPlayback(int day)
+    {
+        if (daySlider != null)
+        {
+            daySlider.SliderValue = day / 6f;
+        }
+        if (dayLabel != null)
+        {
+            dayLabel.text = $"Day {day + 1}";
+        }
+    }
+
     public void MarkIntroAsFinished()
     {
         introFinished = true;
     }
 
-    // Set the rainfall intensity
     public void SetRainByScenario(string scenario)
     {
         if (rain == null)
@@ -280,5 +223,5 @@ public class FarmController : MonoBehaviour
 
         rain.Play();
     }
-}
 
+}

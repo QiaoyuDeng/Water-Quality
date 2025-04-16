@@ -23,6 +23,7 @@ public class ScenarioOverlayController : MonoBehaviour
 
         // Make sure the GameObject is active
         gameObject.SetActive(true);
+        Debug.Log("Overlay GameObject Activated");
         overlayGroup.alpha = 0f;
         scenarioText.text = textToShow;
 

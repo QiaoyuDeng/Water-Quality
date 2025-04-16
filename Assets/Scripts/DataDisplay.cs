@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.UI;
 using TMPro;
 using ChartAndGraph; // 加在顶部
