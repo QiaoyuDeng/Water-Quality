@@ -22,42 +22,34 @@ public class FarmController : MonoBehaviour
 
     [Header("Overlay & Control")]
     public ScenarioOverlayController overlayController;
-    public PinchSlider daySlider;
     public PlayNarrationManager narrationManager;
     public TextMeshProUGUI dayLabel;
-    public GameObject sliderGroup;
+    public Interactable previousButton;
+    public Interactable nextButton;
+    public GameObject dayControlGroup;
 
     private string[] rainfallScenarios = { "LightRainfall", "ModerateRainfall", "HeavyRainfall" };
     private int stepsPerScenario = 7;
     private int currentScenarioIndex = 0;
     private int currentDay = -1;
-    private bool isUpdatingSlider = false;
     private bool isAutoPlaying = false;
+    private Coroutine playbackCoroutine;
 
     public bool introFinished = false;
 
     private IEnumerator Start()
     {
         csvReader.ReadCSV();
+        if (dayControlGroup != null)
+        {
+            dayControlGroup.SetActive(false);
+        }
 
         smallFarm.SetPumpBackReuseRate(-5);
         mediumFarm.SetPumpBackReuseRate(-10);
         largeFarm.SetPumpBackReuseRate(-20);
 
-        if (daySlider != null)
-        {
-            daySlider.OnValueUpdated.AddListener((SliderEventData data) =>
-            {
-                OnSliderChanged(data.NewValue);
-            });
-        }
-
         yield return new WaitUntil(() => introFinished);
-
-        if (sliderGroup != null)
-        {
-            sliderGroup.SetActive(true);
-        }
 
         isAutoPlaying = true;
 
@@ -92,31 +84,48 @@ public class FarmController : MonoBehaviour
             Debug.Log("🌧️ Starting rain visual effect");
             SetRainByScenario(rain);
 
-            yield return StartCoroutine(PlayFromDay(0));
+            if (dayControlGroup != null)
+            {
+                dayControlGroup.SetActive(true);
+            }
+            playbackCoroutine = StartCoroutine(PlayFromDay(0));
+            yield return playbackCoroutine;
         }
 
         isAutoPlaying = false;
     }
 
-    public void OnSliderChanged(float value)
+    public void GoToPreviousDay()
     {
-        if (isAutoPlaying || isUpdatingSlider) return;
-
-        float snapped = Mathf.Round(value * 6) / 6f;
-        int selectedDay = Mathf.Clamp(Mathf.RoundToInt(snapped * 6), 0, 6);
-
-        if (selectedDay != currentDay)
+        if (currentDay > 0)
         {
-            isUpdatingSlider = true;
-            daySlider.SliderValue = snapped;
-
-            currentDay = selectedDay;
-            UpdateSliderFromPlayback(currentDay);
-            StopAllCoroutines();
-            isAutoPlaying = false;
-            StartCoroutine(PlayFromDay(currentDay));
-            isUpdatingSlider = false;
+            currentDay--;
+            StopAllPlayback();
+            playbackCoroutine = StartCoroutine(PlayFromDay(currentDay));
         }
+    }
+
+    public void GoToNextDay()
+    {
+        if (currentDay < stepsPerScenario - 1)
+        {
+            currentDay++;
+            StopAllPlayback();
+            playbackCoroutine = StartCoroutine(PlayFromDay(currentDay));
+        }
+    }
+
+    private void StopAllPlayback()
+    {
+        if (playbackCoroutine != null)
+        {
+            StopCoroutine(playbackCoroutine);
+        }
+
+        narrationManager.StopNarration();
+        smallFarm.StopAllAnimations();
+        mediumFarm.StopAllAnimations();
+        largeFarm.StopAllAnimations();
     }
 
     public IEnumerator PlayFromDay(int startDay)
@@ -134,55 +143,97 @@ public class FarmController : MonoBehaviour
 
         for (int day = startDay; day < stepsPerScenario; day++)
         {
-            yield return new WaitUntil(() =>
-                smallFarm.isReadyForNext &&
-                mediumFarm.isReadyForNext &&
-                largeFarm.isReadyForNext);
-
             currentDay = day;
-            UpdateSliderFromPlayback(day);
+            UpdateDayLabel(day);
+            UpdateDayButtonStates();
 
-            smallFarm.SetReuseValues(smallVolume[day], smallOverflow[day]);
-            mediumFarm.SetReuseValues(mediumVolume[day], mediumOverflow[day]);
-            largeFarm.SetReuseValues(largeVolume[day], largeOverflow[day]);
+            yield return StartCoroutine(PlayDay(day, rain, smallVolume, mediumVolume, largeVolume, smallOverflow, mediumOverflow, largeOverflow));
+        }
 
-            smallFarm.currentScenarioId = currentScenarioIndex;
-            mediumFarm.currentScenarioId = currentScenarioIndex;
-            largeFarm.currentScenarioId = currentScenarioIndex;
+        // ✅ Only trigger transition if it's the last day
+        if (currentScenarioIndex < rainfallScenarios.Length - 1 && currentDay >= stepsPerScenario - 1)
+        {
+            currentScenarioIndex++;
+            currentDay = 0;
 
-            smallFarm.currentDay = day;
-            mediumFarm.currentDay = day;
-            largeFarm.currentDay = day;
+            string nextRain = rainfallScenarios[currentScenarioIndex];
+            string rainLabel = nextRain switch
+            {
+                "LightRainfall" => "Scenario 1: Light Rainfall",
+                "ModerateRainfall" => "Scenario 2: Moderate Rainfall",
+                "HeavyRainfall" => "Scenario 3: Heavy Rainfall",
+                _ => "Scenario: Unknown"
+            };
+            AudioClip clip = nextRain switch
+            {
+                "LightRainfall" => lightRainAudio,
+                "ModerateRainfall" => moderateRainAudio,
+                "HeavyRainfall" => heavyRainAudio,
+                _ => null
+            };
 
-            Debug.Log($"Scenario: {rain}, Day {day + 1} | OverflowPlux => Small: {smallOverflow[day]}, Medium: {mediumOverflow[day]}, Large: {largeOverflow[day]}");
+            if (overlayController != null)
+            {
+                yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
+            }
 
-            StartCoroutine(narrationManager.PlayNarrationAndWait(currentScenarioIndex, day, 0));
-
-            StartCoroutine(smallFarm.AnimateScenarioSilent());
-            StartCoroutine(mediumFarm.AnimateScenarioSilent());
-            StartCoroutine(largeFarm.AnimateScenarioSilent());
-
-            //yield return new WaitForSeconds(2f);
-            yield return new WaitUntil(() =>
-                smallFarm.isReadyForNext &&
-                mediumFarm.isReadyForNext &&
-                largeFarm.isReadyForNext &&
-                !narrationManager.audioSource.isPlaying
-            );
+            playbackCoroutine = StartCoroutine(PlayScenarioFromCurrentDay());
         }
     }
 
-
-
-    private void UpdateSliderFromPlayback(int day)
+    private IEnumerator PlayScenarioFromCurrentDay()
     {
-        if (daySlider != null)
-        {
-            daySlider.SliderValue = day / 6f;
-        }
+        yield return PlayFromDay(currentDay);
+    }
+
+    private IEnumerator PlayDay(int day, string rain, List<float> smallVolume, List<float> mediumVolume, List<float> largeVolume, List<float> smallOverflow, List<float> mediumOverflow, List<float> largeOverflow)
+    {
+        yield return new WaitUntil(() =>
+            smallFarm.isReadyForNext &&
+            mediumFarm.isReadyForNext &&
+            largeFarm.isReadyForNext);
+
+        smallFarm.SetReuseValues(smallVolume[day], smallOverflow[day]);
+        mediumFarm.SetReuseValues(mediumVolume[day], mediumOverflow[day]);
+        largeFarm.SetReuseValues(largeVolume[day], largeOverflow[day]);
+
+        smallFarm.currentScenarioId = currentScenarioIndex;
+        mediumFarm.currentScenarioId = currentScenarioIndex;
+        largeFarm.currentScenarioId = currentScenarioIndex;
+
+        smallFarm.currentDay = day;
+        mediumFarm.currentDay = day;
+        largeFarm.currentDay = day;
+
+        Coroutine narrationCoroutine = StartCoroutine(narrationManager.PlayNarrationAndWait(currentScenarioIndex, day, 0));
+        Coroutine smallAnim = StartCoroutine(smallFarm.AnimateScenarioSilent());
+        Coroutine mediumAnim = StartCoroutine(mediumFarm.AnimateScenarioSilent());
+        Coroutine largeAnim = StartCoroutine(largeFarm.AnimateScenarioSilent());
+
+        yield return new WaitUntil(() =>
+            smallFarm.isReadyForNext &&
+            mediumFarm.isReadyForNext &&
+            largeFarm.isReadyForNext &&
+            !narrationManager.audioSource.isPlaying);
+    }
+
+    private void UpdateDayLabel(int day)
+    {
         if (dayLabel != null)
         {
             dayLabel.text = $"Day {day + 1}";
+        }
+    }
+
+    private void UpdateDayButtonStates()
+    {
+        if (previousButton != null)
+        {
+            previousButton.IsEnabled = currentDay > 0;
+        }
+        if (nextButton != null)
+        {
+            nextButton.IsEnabled = currentDay < stepsPerScenario - 1;
         }
     }
 
@@ -223,5 +274,4 @@ public class FarmController : MonoBehaviour
 
         rain.Play();
     }
-
 }

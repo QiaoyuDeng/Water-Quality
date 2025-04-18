@@ -109,6 +109,16 @@ public class PlayNarrationManager : MonoBehaviour
         }
     }
 
+    public void StopNarration()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            Debug.Log("Narration stopped.");
+        }
+    }
+
+
 
 #if UNITY_EDITOR
 

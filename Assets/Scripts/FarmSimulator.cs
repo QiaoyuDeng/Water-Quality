@@ -51,6 +51,8 @@ public class FarmSimulator : MonoBehaviour
     public PlayNarrationManager narrationManager; // NarrationManager
     public int currentScenarioId = 0;         // 0=light, 1=moderate, 2=heavy
     public int currentDay = 0;                // 0~6
+    private Coroutine currentAnimation;
+
 
 
     // Start is called before the first frame update
@@ -255,9 +257,11 @@ public class FarmSimulator : MonoBehaviour
 
     public IEnumerator AnimateScenarioSilent()
     {
+
         isReadyForNext = false;
         Debug.Log($"{this.name}: Running animation");
-        yield return StartCoroutine(RunFullAnimationSequence());
+        currentAnimation = StartCoroutine(RunFullAnimationSequence());
+        yield return currentAnimation;
         isReadyForNext = true;
     }
 
@@ -296,6 +300,18 @@ public class FarmSimulator : MonoBehaviour
         effluentPipeAnimator.StartAnimation(this);
         yield return irrigationWaterPlaneScript.ChangeVolumeByAmount(-pumpBackReuseRate);
         yield return new WaitForSeconds(3f);
+    }
+
+    public void StopAllAnimations()
+    {
+        if (currentAnimation != null)
+        {
+            StopCoroutine(currentAnimation);
+            currentAnimation = null;
+        }
+
+        isReadyForNext = true;
+        Debug.Log(name + " animations stopped.");
     }
 
 
