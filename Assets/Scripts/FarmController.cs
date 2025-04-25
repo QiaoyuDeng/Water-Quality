@@ -55,6 +55,11 @@ public class FarmController : MonoBehaviour
 
         for (int scenarioIndex = 0; scenarioIndex < rainfallScenarios.Length; scenarioIndex++)
         {
+            smallFarm.ResetOverflowCube();
+            mediumFarm.ResetOverflowCube();
+            largeFarm.ResetOverflowCube();
+
+
             currentScenarioIndex = scenarioIndex;
             string rain = rainfallScenarios[scenarioIndex];
 
@@ -131,7 +136,15 @@ public class FarmController : MonoBehaviour
     public IEnumerator PlayFromDay(int startDay)
     {
         string rain = rainfallScenarios[currentScenarioIndex];
+
+
         SetRainByScenario(rain);
+
+        // adjust heightscale to avoid high values
+        float heightScale = (rain == "HeavyRainfall") ? 0.01f : 1f;
+        smallFarm.heightScale = heightScale;
+        mediumFarm.heightScale = heightScale;
+        largeFarm.heightScale = heightScale;
 
         List<float> smallOverflow = csvReader.GetColumnValues($"5ML_{rain}_OverflowPlux");
         List<float> mediumOverflow = csvReader.GetColumnValues($"10ML_{rain}_OverflowPlux");
@@ -177,6 +190,10 @@ public class FarmController : MonoBehaviour
                 yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
             }
 
+            smallFarm.ResetOverflowCube();
+            mediumFarm.ResetOverflowCube();
+            largeFarm.ResetOverflowCube();
+
             playbackCoroutine = StartCoroutine(PlayScenarioFromCurrentDay());
         }
     }
@@ -193,13 +210,21 @@ public class FarmController : MonoBehaviour
             mediumFarm.isReadyForNext &&
             largeFarm.isReadyForNext);
 
-        smallFarm.SetReuseValues(smallVolume[day], smallOverflow[day]);
-        mediumFarm.SetReuseValues(mediumVolume[day], mediumOverflow[day]);
-        largeFarm.SetReuseValues(largeVolume[day], largeOverflow[day]);
+        float cumulativeSmallOverflow = 0f;
+        float cumulativeMediumOverflow = 0f;
+        float cumulativeLargeOverflow = 0f;
 
-        smallFarm.currentScenarioId = currentScenarioIndex;
-        mediumFarm.currentScenarioId = currentScenarioIndex;
-        largeFarm.currentScenarioId = currentScenarioIndex;
+        for (int i = 0; i <= day; i++)
+        {
+            cumulativeSmallOverflow += smallOverflow[i];
+            cumulativeMediumOverflow += mediumOverflow[i];
+            cumulativeLargeOverflow += largeOverflow[i];
+        }
+
+        smallFarm.SetReuseValues(smallVolume[day], smallOverflow[day], cumulativeSmallOverflow);
+        mediumFarm.SetReuseValues(mediumVolume[day], mediumOverflow[day], cumulativeMediumOverflow);
+        largeFarm.SetReuseValues(largeVolume[day], largeOverflow[day], cumulativeLargeOverflow);
+
 
         smallFarm.currentDay = day;
         mediumFarm.currentDay = day;
@@ -215,6 +240,17 @@ public class FarmController : MonoBehaviour
             mediumFarm.isReadyForNext &&
             largeFarm.isReadyForNext &&
             !narrationManager.audioSource.isPlaying);
+
+        if (day == stepsPerScenario - 1)
+        {
+            Debug.Log($"✅ Triggering final narration for scenario {currentScenarioIndex}, day {day}, step 99");
+            yield return StartCoroutine(narrationManager.PlayNarrationAndWait(currentScenarioIndex, day, 99));
+        }
+        else
+        {
+            Debug.Log($"🔸 Not final day: day = {day}");
+        }
+
     }
 
     private void UpdateDayLabel(int day)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
+using TMPro;
 
 public class FarmSimulator : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class FarmSimulator : MonoBehaviour
     private float reuseStorageVolume = 0;
     private float reuseOverflowPlux = 0;
     private float pumpBackReuseRate = 0;
+
     // Indicates whether this farm has completed the current simulation step
     public bool isReadyForNext = true;
 
@@ -52,6 +54,20 @@ public class FarmSimulator : MonoBehaviour
     public int currentScenarioId = 0;         // 0=light, 1=moderate, 2=heavy
     public int currentDay = 0;                // 0~6
     private Coroutine currentAnimation;
+
+    [Header("Overflow Visual")]
+    //public Transform overflowCube;
+    public Transform overflowBase;         
+    public Transform overflowMiddle;      
+    public Transform cubeTopAnchor;       
+    public GameObject overflowTooltip; // Tooltip root object that contains the label and visuals
+    private float anchorBaseY;
+
+
+    public float heightScale = 10f; // adjust this value to change the height of the overflow cube
+    private float totalOverflow = 0f;
+    public TMPro.TextMeshPro overflowLabel; 
+
 
 
 
@@ -84,7 +100,9 @@ public class FarmSimulator : MonoBehaviour
         {
             cowFactory.SpawnCows();
         }
-        
+
+        anchorBaseY = cubeTopAnchor.localPosition.y;
+
         // Start the animation for the desired scenario
         // StartCoroutine(ChooseScenario(currentScenario));
     }
@@ -243,10 +261,8 @@ public class FarmSimulator : MonoBehaviour
     public IEnumerator AnimateScenario()
     {
 
-        // version 3----------------------------------------------------------------------------------------------//
         isReadyForNext = false;
 
-        // Step 0 narration + Step 1–6 animation 
         yield return StartCoroutine(WaitForBoth(
             RunFullAnimationSequence(),
             narrationManager.PlayNarrationAndWait(currentScenarioId, currentDay, 0)
@@ -407,11 +423,113 @@ public class FarmSimulator : MonoBehaviour
 
     ////////////////////////////////////////////////////////////
     // player can call this method to run a step of irrigation
-    public void SetReuseValues(float volume, float overflow)
+    public void SetReuseValues(float volume, float overflow, float cumulativeOverflow)
     {
         reuseStorageVolume = volume;
         reuseOverflowPlux = overflow;
+        //totalOverflow += overflow;
+        totalOverflow = cumulativeOverflow;
+
+
+        float height = totalOverflow * heightScale;
+
+        // Ensure the top anchor is active and moved to correct height
+        if (cubeTopAnchor != null)
+        {
+            if (!cubeTopAnchor.gameObject.activeSelf)
+                cubeTopAnchor.gameObject.SetActive(true);
+
+            Vector3 anchorPos = cubeTopAnchor.localPosition;
+            anchorPos.y = anchorBaseY + height; // correct starting offset 
+            cubeTopAnchor.localPosition = anchorPos;
+        }
+
+        // Enable and adjust the middle pillar to visually connect base and top
+        if (overflowMiddle != null && overflowBase != null)
+        {
+            if (!overflowMiddle.gameObject.activeSelf)
+                overflowMiddle.gameObject.SetActive(true);
+
+            // Compute distance between base and top
+            float topY = cubeTopAnchor.localPosition.y;
+            float baseY = overflowBase.localPosition.y;
+            float distance = topY - baseY;
+
+            Debug.Log($"[Overflow] Top Y: {topY}, Base Y: {baseY}, Distance: {distance}");
+
+            // Position the middle pillar halfway between base and top
+            Vector3 midPos = overflowMiddle.localPosition;
+            midPos.y = baseY + distance / 2f;
+            overflowMiddle.localPosition = midPos;
+            Debug.Log($"[Overflow] Middle Position Y set to: {midPos.y}");
+
+            // Scale the middle pillar so its height matches the distance (pivot at center)
+            Vector3 midScale = overflowMiddle.localScale;
+            midScale.y = distance;
+            overflowMiddle.localScale = midScale;
+            Debug.Log($"[Overflow] Middle Scale Y set to: {midScale.y}");
+        }
+
+        // Show and position the tooltip root (overflowTooltip)
+        if (overflowTooltip != null)
+        {
+            if (!overflowTooltip.activeSelf) 
+            {
+                overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>0.00 kg</size></b>";
+                overflowTooltip.SetActive(true);
+            }
+                
+
+            // Place the tooltip at the top anchor's world position
+            overflowTooltip.transform.position = cubeTopAnchor.position;
+        }
+
+        // Update tooltip text
+        if (overflowLabel != null)
+        {
+            overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>" + totalOverflow.ToString("F2") + " kg</size></b>";
+            overflowLabel.fontSize = 80; 
+
+
+            // Do NOT manually set overflowLabel.transform.position — it follows the tooltip root
+        }
     }
+
+
+    // new method to reset the overflow cube and label
+    public void ResetOverflowCube()
+    {
+        // Reset the total overflow to 0
+        totalOverflow = 0f;
+
+        // Hide the middle pillar
+        if (overflowMiddle != null)
+        {
+            overflowMiddle.gameObject.SetActive(false);
+        }
+
+        // Reset the top anchor point to a small Y value
+        if (cubeTopAnchor != null)
+        {
+            Vector3 pos = cubeTopAnchor.localPosition;
+            pos.y = anchorBaseY; // This ensures it's not at ground level or completely hidden
+            cubeTopAnchor.localPosition = pos;
+        }
+
+        // Reset the tooltip label text
+        if (overflowLabel != null)
+        {
+            overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>0.00 kg</size></b>";
+            overflowLabel.fontSize = 80;
+        }
+
+        // Hide the tooltip root object
+        if (overflowTooltip != null)
+        {
+            overflowTooltip.SetActive(false);
+        }
+    }
+
 
     public void SetPumpBackReuseRate(float rate)
     {
