@@ -13,7 +13,7 @@ public class FarmController : MonoBehaviour
     public FarmSimulator largeFarm;
 
     [Header("Rain Particle Control")]
-    public ParticleSystem rain;
+    public ParticleSystem rainParticleSystem;
 
     [Header("Rain Audio Clips")]
     public AudioClip lightRainAudio;
@@ -36,6 +36,10 @@ public class FarmController : MonoBehaviour
     private Coroutine playbackCoroutine;
 
     public bool introFinished = false;
+
+    [Header("Dialog Control")]
+    public GameObject dialogPrefabLarge;  
+    public MRTKSceneTransition sceneTransition;  
 
     private IEnumerator Start()
     {
@@ -196,6 +200,45 @@ public class FarmController : MonoBehaviour
 
             playbackCoroutine = StartCoroutine(PlayScenarioFromCurrentDay());
         }
+
+        if (currentScenarioIndex == rainfallScenarios.Length - 1 && currentDay == stepsPerScenario - 1)
+        {
+            Debug.Log("🎬 All scenarios complete. Showing next stage dialogue!");
+
+            Dialog myDialog = Dialog.Open(dialogPrefabLarge);
+
+            if (myDialog != null)
+            {
+                myDialog.OnClosed += result =>
+                {
+                    switch (result.Result)
+                    {
+                        case DialogButtonType.Yes:
+                            Debug.Log("✅ User clicked YES - Starting transition to exploration view!");
+
+                            if (rainParticleSystem != null)
+                            {
+                                rainParticleSystem.Stop();
+                            }
+
+                            smallFarm.HideOverflowObjects();
+                            mediumFarm.HideOverflowObjects();
+                            largeFarm.HideOverflowObjects();
+
+                            if (dayControlGroup != null)
+                            {
+                                dayControlGroup.SetActive(false);
+                            }
+
+                            if (sceneTransition != null)
+                            {
+                                sceneTransition.BeginTransition();  
+                            }
+                            break;
+                    }
+                };
+            }
+        }
     }
 
     private IEnumerator PlayScenarioFromCurrentDay()
@@ -280,14 +323,14 @@ public class FarmController : MonoBehaviour
 
     public void SetRainByScenario(string scenario)
     {
-        if (rain == null)
+        if (rainParticleSystem == null)
         {
             Debug.LogWarning("❗ Rain particle system not assigned.");
             return;
         }
 
-        var emission = rain.emission;
-        var main = rain.main;
+        var emission = rainParticleSystem.emission;
+        var main = rainParticleSystem.main;
 
         if (scenario == "LightRainfall")
         {
@@ -308,6 +351,6 @@ public class FarmController : MonoBehaviour
             Debug.Log("Heavy rainfall started.");
         }
 
-        rain.Play();
+        rainParticleSystem.Play();
     }
 }

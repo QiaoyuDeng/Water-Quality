@@ -7543,7 +7543,7 @@ MonoBehaviour:
   smallFarm: {fileID: 569612870}
   mediumFarm: {fileID: 821921990}
   largeFarm: {fileID: 1963067550}
-  rain: {fileID: 1166389982}
+  rainParticleSystem: {fileID: 0}
   lightRainAudio: {fileID: 8300000, guid: cf6b68cade923734cb8954abb57b09d6, type: 3}
   moderateRainAudio: {fileID: 8300000, guid: c6d4b1387b60ad4489f3dc212b05e3a2, type: 3}
   heavyRainAudio: {fileID: 8300000, guid: a68578e707e92ee488066e698902c9c1, type: 3}
@@ -7554,6 +7554,8 @@ MonoBehaviour:
   nextButton: {fileID: 1665569678}
   dayControlGroup: {fileID: 870959464}
   introFinished: 0
+  dialogPrefabLarge: {fileID: 5194421392751451369, guid: c66123020f606834e8597e88cbe187a7, type: 3}
+  sceneTransition: {fileID: 1164658313}
 --- !u!4 &337101261
 Transform:
   m_ObjectHideFlags: 0
@@ -30864,6 +30866,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 603984757477085960, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902931854357042656, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1304643893811344183, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -30891,6 +30901,18 @@ PrefabInstance:
     - target: {fileID: 1304643894731633542, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304643894986788373, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304643895264675520, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304643895703654052, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1518680566025991017, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
@@ -30928,9 +30950,41 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2246256943854117318, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246256944050849441, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246256944682208965, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246256945226316675, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2285278891320529625, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285278892493893627, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438105290560594637, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438105290915242620, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438105291195361961, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2438105291385436296, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_IsActive
@@ -30959,6 +31013,10 @@ PrefabInstance:
     - target: {fileID: 2438105292220255841, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Name
       value: LightRainfall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305803750442324951, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3709928112245505493, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
@@ -31005,6 +31063,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4223161004110279479, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488689741976633494, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488689742608287986, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
@@ -31267,6 +31333,10 @@ PrefabInstance:
     - target: {fileID: 8726317958575467603, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726317959549587825, guid: 75871044e9982ca47aa48612f87923df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -31752,6 +31822,53 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 447232131}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1164658312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1164658314}
+  - component: {fileID: 1164658313}
+  m_Layer: 0
+  m_Name: ViewTransitionSection3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1164658313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164658312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436fcc3cc5a4ca14ab8681f27590a860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetView: {fileID: 1164658314}
+  duration: 3
+  farmIntro: {fileID: 0}
+--- !u!4 &1164658314
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164658312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165176356
@@ -72247,7 +72364,7 @@ GameObject:
   - component: {fileID: 2051655045}
   - component: {fileID: 2051655044}
   m_Layer: 0
-  m_Name: ViewTransition
+  m_Name: ViewTransitionSection2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78385,4 +78502,5 @@ SceneRoots:
   - {fileID: 509563676}
   - {fileID: 337101261}
   - {fileID: 2051655048}
+  - {fileID: 1164658314}
   - {fileID: 1333665736}

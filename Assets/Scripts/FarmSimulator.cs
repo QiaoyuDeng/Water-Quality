@@ -530,6 +530,21 @@ public class FarmSimulator : MonoBehaviour
         }
     }
 
+    public void HideOverflowObjects()
+    {
+        if (overflowBase != null)
+            overflowBase.gameObject.SetActive(false);
+
+        if (overflowMiddle != null)
+            overflowMiddle.gameObject.SetActive(false);
+
+        if (cubeTopAnchor != null)
+            cubeTopAnchor.gameObject.SetActive(false);
+
+        if (overflowTooltip != null)
+            overflowTooltip.SetActive(false);
+    }
+
 
     public void SetPumpBackReuseRate(float rate)
     {
