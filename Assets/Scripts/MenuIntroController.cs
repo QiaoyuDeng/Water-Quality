@@ -28,6 +28,17 @@ public class MenuIntroController : MonoBehaviour
     public GameObject barChartObject;  // Drag your chart into the Inspector
     private BarChart barChart;         // Actual components in use
 
+    [Header("Rain Control")]
+    public ParticleSystem rainParticleSystem;
+
+    // Field to save previous highlighted controller
+    private string lastHighlightedCategoryName = null;
+    private Material originalNormalMaterial = null;
+    public Material highlightMaterial;
+    private ChartMaterialController lastHighlightedController = null;
+
+
+
     //public GameObject[] tooltips;
     //public AudioClip[] audioClips;
     //public AudioSource audioSource;
@@ -68,6 +79,8 @@ public class MenuIntroController : MonoBehaviour
     {
         currentScenario = scenario;
         UpdateDataColumn();
+
+        SetRainByScenario(scenario);
     }
 
     public void OnTargetSelected(string target)
@@ -125,6 +138,98 @@ public class MenuIntroController : MonoBehaviour
         // Panel
         if (dataBoard != null) dataBoard.SetActive(true);
     }
+
+    public void SetRainByScenario(string scenario)
+    {
+        if (rainParticleSystem == null)
+        {
+            Debug.LogWarning("❗ Rain particle system not assigned.");
+            return;
+        }
+
+        var emission = rainParticleSystem.emission;
+        var main = rainParticleSystem.main;
+
+        if (scenario == "LightRainfall")
+        {
+            emission.rateOverTime = 10;
+            main.startSize = 0.05f;
+            Debug.Log("Light rainfall started.");
+        }
+        else if (scenario == "ModerateRainfall")
+        {
+            emission.rateOverTime = 100;
+            main.startSize = 0.08f;
+            Debug.Log("Moderate rainfall started.");
+        }
+        else if (scenario == "HeavyRainfall")
+        {
+            emission.rateOverTime = 200;
+            main.startSize = 0.1f;
+            Debug.Log("Heavy rainfall started.");
+        }
+
+        rainParticleSystem.Stop();
+        rainParticleSystem.Clear();
+        rainParticleSystem.Play();
+    }
+
+    public void HighlightDayNormal(int dayIndex=4)
+    {
+        Debug.Log($"[Highlight Debug] 🔵 Trying to highlight {dayIndex}");
+
+        if (barChart == null)
+        {
+            if (barChartObject != null)
+            {
+                barChart = barChartObject.GetComponent<BarChart>();
+                Debug.Log($"[Highlight Debug] ✅ barChart assigned from barChartObject: {barChartObject.name}");
+            }
+            else
+            {
+                Debug.LogError("[Highlight Debug] ❌ No barChart assigned!");
+                return;
+            }
+        }
+
+        // Step 1: Restore previous highlighted bar
+        if (lastHighlightedController != null)
+        {
+            Debug.Log($"[Highlight Debug] 🔄 Restoring previous highlight: {lastHighlightedController.name}");
+            lastHighlightedController.OnMouseExit();  // 让上一次高亮的柱子取消 hover
+            lastHighlightedController = null;
+        }
+
+        // Step 2: Find new bar to highlight
+        // Get all controllers
+        ChartMaterialController[] controllers = barChart.GetComponentsInChildren<ChartMaterialController>();
+        Debug.Log($"[Highlight Debug] 🧩 Found {controllers.Length} controllers.");
+
+        if (controllers != null && dayIndex >= 0 && dayIndex < controllers.Length)
+        {
+            ChartMaterialController ctrl = controllers[dayIndex];
+
+            if (ctrl != null)
+            {
+                Debug.Log($"[Highlight Debug] ✅ Found controller for Day {dayIndex + 1}");
+
+                ctrl.OnMouseEnter();  // Simulate hover
+                lastHighlightedController = ctrl;
+            }
+            else
+            {
+                Debug.LogWarning($"[Highlight Debug] ❌ Controller at index {dayIndex} is null!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[Highlight Debug] ❌ Invalid dayIndex: {dayIndex} (controllers length: {controllers.Length})");
+        }
+
+    }
+
+
+
 
 
     //private IEnumerator PlayMenuIntro()

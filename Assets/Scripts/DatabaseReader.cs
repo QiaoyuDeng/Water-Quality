@@ -81,7 +81,7 @@ public class CSVReader : MonoBehaviour
                 else
                 {
                     Debug.LogWarning($"Conversion failed: {raw}");
-                    values.Add(0); // 或者跳过，或用 NaN
+                    values.Add(0); 
                 }
             }
         }

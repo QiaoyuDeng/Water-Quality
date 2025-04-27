@@ -22,5 +22,6 @@ public class ObjectClickable : MonoBehaviour
                                 title, 
                                 description, 
                                 unit);
+        
     }
 }

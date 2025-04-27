@@ -18,6 +18,7 @@ public class TooltipController : MonoBehaviour
 
     [Header("Testing Options")]
     public bool skipAudio = false;
+    public GameObject clickableObj;
 
     private void Start()
     {
@@ -88,6 +89,10 @@ public class TooltipController : MonoBehaviour
                         break;
                     case DialogButtonType.No:
                         sceneTransition.BeginTransition();
+                        //testing hand menu and skip the scene 2
+                        //MenuIntroController.StartIntro();
+                        //clickableObj.SetActive(true);
+                        
                         break;
                 }
             };

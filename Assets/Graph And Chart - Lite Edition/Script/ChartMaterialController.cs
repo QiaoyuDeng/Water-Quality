@@ -114,7 +114,7 @@ namespace ChartAndGraph
             Refresh();
         }
 
-        void OnMouseEnter()
+        public void OnMouseEnter()
         {
             if (HandleEvents == false)
                 return;
@@ -122,7 +122,7 @@ namespace ChartAndGraph
             Refresh();
         }
 
-        void OnMouseExit()
+        public void OnMouseExit()
         {
             if (HandleEvents == false)
                 return;
@@ -130,7 +130,7 @@ namespace ChartAndGraph
             Refresh();
         }
 
-        void OnMouseDown()
+        public void OnMouseDown()
         {
             if (HandleEvents == false)
                 return;
@@ -138,7 +138,7 @@ namespace ChartAndGraph
             Refresh();
         }
 
-        void OnMouseUp()
+        public void OnMouseUp()
         {
             if (HandleEvents == false)
                 return;
@@ -146,7 +146,7 @@ namespace ChartAndGraph
             Refresh();
         }
 
-        void Update()
+        public void Update()
         {
             if (mLerpEffect != null && mLerping)
             {
@@ -225,7 +225,7 @@ namespace ChartAndGraph
             }
         }
 
-        void SetColor(Color c)
+        public void SetColor(Color c)
         {
             if (ChartCommon.IsInEditMode)
                 return;
@@ -303,5 +303,36 @@ namespace ChartAndGraph
         {
             OnMouseUp();
         }
+
+        // written by my own, in order to set the normal material from outside
+        //public void ForceSetNormalMaterial(Material normalMaterial)
+        //{
+        //    if (normalMaterial != null)
+        //    {
+        //        if (mRenderer == null)
+        //            mRenderer = GetComponent<Renderer>();
+        //        if (mRenderer != null)
+        //        {
+        //            ChartCommon.SafeAssignMaterial(mRenderer, normalMaterial, null);
+        //        }
+        //        else if (mCanvasRenderer == null)
+        //        {
+        //            mCanvasRenderer = GetComponent<Graphic>();
+        //        }
+
+        //        if (mCanvasRenderer != null)
+        //        {
+        //            mCanvasRenderer.material = normalMaterial;
+        //        }
+        //    }
+        //}
+
+        public void ForceMouseExit()
+        {
+            mMouseOver = false;
+            Refresh();
+        }
+
+
     }
 }

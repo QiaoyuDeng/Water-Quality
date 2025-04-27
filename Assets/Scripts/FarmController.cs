@@ -39,7 +39,12 @@ public class FarmController : MonoBehaviour
 
     [Header("Dialog Control")]
     public GameObject dialogPrefabLarge;  
-    public MRTKSceneTransition sceneTransition;  
+    public MRTKSceneTransition sceneTransition;
+
+    [Header("Hand Menu")]
+    public GameObject handMenu;
+    public GameObject clickableObj;
+    public GameObject floorCanvas;
 
     private IEnumerator Start()
     {
@@ -232,8 +237,21 @@ public class FarmController : MonoBehaviour
 
                             if (sceneTransition != null)
                             {
-                                sceneTransition.BeginTransition();  
+                                sceneTransition.BeginTransition();
                             }
+
+                            if (handMenu != null)
+                            {
+                                handMenu.SetActive(true);
+                            }
+
+                            if (clickableObj != null)
+                            {
+                                clickableObj.SetActive(true);
+                            }
+
+                            floorCanvas.SetActive(false);
+
                             break;
                     }
                 };
