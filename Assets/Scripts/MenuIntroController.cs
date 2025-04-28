@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using ChartAndGraph;
 
+
 public class MenuIntroController : MonoBehaviour
 {
     public GameObject nearMenu;
@@ -32,12 +33,17 @@ public class MenuIntroController : MonoBehaviour
     public ParticleSystem rainParticleSystem;
 
     // Field to save previous highlighted controller
-    private string lastHighlightedCategoryName = null;
-    private Material originalNormalMaterial = null;
     public Material highlightMaterial;
     private ChartMaterialController lastHighlightedController = null;
 
+    // Animation
+    public FarmController farmController;
 
+    [Header("Teleport Targets")]
+    public Transform smallFarmTeleportTarget;
+    public Transform mediumFarmTeleportTarget;
+    public Transform largeFarmTeleportTarget;
+    public MRTKSceneTransition sceneTransition;
 
     //public GameObject[] tooltips;
     //public AudioClip[] audioClips;
@@ -143,7 +149,7 @@ public class MenuIntroController : MonoBehaviour
     {
         if (rainParticleSystem == null)
         {
-            Debug.LogWarning("❗ Rain particle system not assigned.");
+            Debug.LogWarning("Rain particle system not assigned.");
             return;
         }
 
@@ -176,18 +182,18 @@ public class MenuIntroController : MonoBehaviour
 
     public void HighlightDayNormal(int dayIndex=4)
     {
-        Debug.Log($"[Highlight Debug] 🔵 Trying to highlight {dayIndex}");
+        Debug.Log($"[Highlight Debug] Trying to highlight {dayIndex}");
 
         if (barChart == null)
         {
             if (barChartObject != null)
             {
                 barChart = barChartObject.GetComponent<BarChart>();
-                Debug.Log($"[Highlight Debug] ✅ barChart assigned from barChartObject: {barChartObject.name}");
+                Debug.Log($"[Highlight Debug] barChart assigned from barChartObject: {barChartObject.name}");
             }
             else
             {
-                Debug.LogError("[Highlight Debug] ❌ No barChart assigned!");
+                Debug.LogError("[Highlight Debug] No barChart assigned!");
                 return;
             }
         }
@@ -195,15 +201,15 @@ public class MenuIntroController : MonoBehaviour
         // Step 1: Restore previous highlighted bar
         if (lastHighlightedController != null)
         {
-            Debug.Log($"[Highlight Debug] 🔄 Restoring previous highlight: {lastHighlightedController.name}");
-            lastHighlightedController.OnMouseExit();  // 让上一次高亮的柱子取消 hover
+            Debug.Log($"[Highlight Debug] Restoring previous highlight: {lastHighlightedController.name}");
+            lastHighlightedController.OnMouseExit();  
             lastHighlightedController = null;
         }
 
         // Step 2: Find new bar to highlight
         // Get all controllers
         ChartMaterialController[] controllers = barChart.GetComponentsInChildren<ChartMaterialController>();
-        Debug.Log($"[Highlight Debug] 🧩 Found {controllers.Length} controllers.");
+        Debug.Log($"[Highlight Debug] Found {controllers.Length} controllers.");
 
         if (controllers != null && dayIndex >= 0 && dayIndex < controllers.Length)
         {
@@ -211,22 +217,48 @@ public class MenuIntroController : MonoBehaviour
 
             if (ctrl != null)
             {
-                Debug.Log($"[Highlight Debug] ✅ Found controller for Day {dayIndex + 1}");
+                Debug.Log($"[Highlight Debug] Found controller for Day {dayIndex + 1}");
 
                 ctrl.OnMouseEnter();  // Simulate hover
                 lastHighlightedController = ctrl;
             }
             else
             {
-                Debug.LogWarning($"[Highlight Debug] ❌ Controller at index {dayIndex} is null!");
+                Debug.LogWarning($"[Highlight Debug] Controller at index {dayIndex} is null!");
             }
         }
         else
         {
-            Debug.LogWarning($"[Highlight Debug] ❌ Invalid dayIndex: {dayIndex} (controllers length: {controllers.Length})");
+            Debug.LogWarning($"[Highlight Debug] Invalid dayIndex: {dayIndex} (controllers length: {controllers.Length})");
         }
 
     }
+
+    public void TeleportToSelectedFarm()
+    {
+        string farmSize = GetCurrentFarmSize(); 
+
+        Transform target = null;
+
+        if (farmSize == "5ML")
+            target = smallFarmTeleportTarget;
+        else if (farmSize == "10ML")
+            target = mediumFarmTeleportTarget;
+        else if (farmSize == "20ML")
+            target = largeFarmTeleportTarget;
+
+        if (target != null && sceneTransition != null)
+        {
+            sceneTransition.targetView = target; 
+            sceneTransition.BeginTransition();   
+            Debug.Log($"Teleporting to {farmSize} at {target.position}");
+        }
+        else
+        {
+            Debug.LogWarning("Teleport target or sceneTransition not assigned properly!");
+        }
+    }
+
 
 
 

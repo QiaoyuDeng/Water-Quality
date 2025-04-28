@@ -86,6 +86,10 @@ public class DataDisplay : MonoBehaviour
                 string groupName = $"Day {dayIndex + 1}";
                 menuIntroController.HighlightDayNormal(dayIndex);
                 Debug.Log($"[Highlight Debug] HighlightDay({groupName}) has been called successfully!");
+
+                string selectedRain = menuIntroController.GetCurrentScenario();
+                menuIntroController.farmController.PlayOnlyCurrentDay(dayIndex, selectedRain);
+
             }
         });
 

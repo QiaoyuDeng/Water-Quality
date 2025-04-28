@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 using TMPro;
+using ChartAndGraph;
 
 public class FarmSimulator : MonoBehaviour
 {
@@ -66,7 +67,8 @@ public class FarmSimulator : MonoBehaviour
 
     public float heightScale = 10f; // adjust this value to change the height of the overflow cube
     private float totalOverflow = 0f;
-    public TMPro.TextMeshPro overflowLabel; 
+    public TMPro.TextMeshPro overflowLabel;
+
 
 
 

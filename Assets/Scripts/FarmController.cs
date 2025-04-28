@@ -44,7 +44,7 @@ public class FarmController : MonoBehaviour
     [Header("Hand Menu")]
     public GameObject handMenu;
     public GameObject clickableObj;
-    public GameObject floorCanvas;
+    //public GameObject floorCanvas;
 
     private IEnumerator Start()
     {
@@ -250,7 +250,7 @@ public class FarmController : MonoBehaviour
                                 clickableObj.SetActive(true);
                             }
 
-                            floorCanvas.SetActive(false);
+                            //floorCanvas.SetActive(false);
 
                             break;
                     }
@@ -313,6 +313,27 @@ public class FarmController : MonoBehaviour
         }
 
     }
+
+    public void PlayOnlyCurrentDay(int dayIndex, string rain)
+    {
+        Debug.Log($"🎬 Playing only Day {dayIndex + 1} from HandMenu Slider with Rainfall={rain}");
+
+        StopAllPlayback(); 
+
+        currentDay = dayIndex;
+        smallFarm.currentDay = dayIndex;
+        mediumFarm.currentDay = dayIndex;
+        largeFarm.currentDay = dayIndex;
+
+        if (smallFarm != null) StartCoroutine(smallFarm.AnimateScenarioSilent());
+        if (mediumFarm != null) StartCoroutine(mediumFarm.AnimateScenarioSilent());
+        if (largeFarm != null) StartCoroutine(largeFarm.AnimateScenarioSilent());
+    }
+
+
+
+
+
 
     private void UpdateDayLabel(int day)
     {
