@@ -8304,6 +8304,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -115.35567
       objectReference: {fileID: 0}
+    - target: {fileID: 8502330692357846407, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8989793987919025020, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
@@ -10986,21 +10990,29 @@ PrefabInstance:
       value: Day 7
       objectReference: {fileID: 0}
     - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      propertyPath: Data.mCategories.Array.data[1].Materials.Normal
+      value: 
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
+    - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      propertyPath: Data.mCategories.Array.data[2].Materials.Normal
+      value: 
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
+    - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[3].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[4].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[5].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[6].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 1237718008854489831, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[3].Materials.Hover.a
       value: 1
@@ -11274,21 +11286,29 @@ PrefabInstance:
       value: Day 7
       objectReference: {fileID: 0}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      propertyPath: Data.mCategories.Array.data[1].Materials.Normal
+      value: 
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
+    - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      propertyPath: Data.mCategories.Array.data[2].Materials.Normal
+      value: 
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
+    - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[3].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[4].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[5].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[6].Materials.Normal
       value: 
-      objectReference: {fileID: 2100000, guid: 298752f2278b2fe44bfa6cfb850dd282, type: 2}
+      objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[3].Materials.Hover.a
       value: 1
@@ -28912,7 +28932,7 @@ MonoBehaviour:
   smallFarmTeleportTarget: {fileID: 907305700}
   mediumFarmTeleportTarget: {fileID: 24905050}
   largeFarmTeleportTarget: {fileID: 727139278}
-  sceneTransition: {fileID: 2051655044}
+  sceneTransition: {fileID: 1164658313}
 --- !u!114 &952100602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34045,6 +34065,7 @@ GameObject:
   - component: {fileID: 1164658317}
   - component: {fileID: 1164658316}
   - component: {fileID: 1164658315}
+  - component: {fileID: 1164658318}
   m_Layer: 0
   m_Name: ViewTransitionSection3
   m_TagString: Untagged
@@ -34213,6 +34234,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1164658318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164658312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436fcc3cc5a4ca14ab8681f27590a860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetView: {fileID: 1164658314}
+  duration: 2
+  farmIntro: {fileID: 0}
 --- !u!1 &1165176356
 GameObject:
   m_ObjectHideFlags: 0
