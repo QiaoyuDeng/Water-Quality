@@ -64,10 +64,12 @@ public class FarmSimulator : MonoBehaviour
     public GameObject overflowTooltip; // Tooltip root object that contains the label and visuals
     private float anchorBaseY;
 
-
     public float heightScale = 10f; // adjust this value to change the height of the overflow cube
     private float totalOverflow = 0f;
     public TMPro.TextMeshPro overflowLabel;
+
+    [Header("Paddock Saturation")]
+    public float paddockTPValue = 0.0f; // paddock TP value for the current scenario
 
 
 
@@ -110,9 +112,10 @@ public class FarmSimulator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
+    //void Update()
+    //{
+    //    paddockScript.SetTP(paddockTPValue);
+    //}
 
     // Scenario 1: Normal weather conditions with optimum storage condition
     private IEnumerator AnimateNormalWeather()
@@ -134,7 +137,7 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.MoveToPlane(paddock);
 
             // 3. saturate the paddock
-            yield return StartCoroutine(paddockScript.AnimateSaturation());
+            yield return StartCoroutine(paddockScript.AnimateSaturation(paddockTPValue));
 
             yield return cowFactory.ReturnCows();
 
@@ -183,7 +186,7 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.MoveToPlane(paddock);
 
             // 3. saturate the paddock
-            yield return StartCoroutine(paddockScript.AnimateSaturation());
+            yield return StartCoroutine(paddockScript.AnimateSaturation(paddockTPValue));
 
             yield return cowFactory.ReturnCows();
 
@@ -229,7 +232,7 @@ public class FarmSimulator : MonoBehaviour
             yield return cowFactory.MoveToPlane(paddock);
 
             // 3. saturate the paddock
-            yield return StartCoroutine(paddockScript.AnimateSaturation());
+            yield return StartCoroutine(paddockScript.AnimateSaturation(paddockTPValue));
 
             yield return cowFactory.ReturnCows();
 
@@ -299,7 +302,7 @@ public class FarmSimulator : MonoBehaviour
         yield return cowFactory.MoveToPlane(paddock);
 
         // Step 3
-        yield return paddockScript.AnimateSaturation();
+        yield return paddockScript.AnimateSaturation(paddockTPValue);
         yield return cowFactory.ReturnCows();
 
         // Step 4
@@ -477,7 +480,7 @@ public class FarmSimulator : MonoBehaviour
         {
             if (!overflowTooltip.activeSelf) 
             {
-                overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>0.00 kg</size></b>";
+                overflowLabel.text = "<b><size=80>Outflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
                 overflowTooltip.SetActive(true);
             }
                 
@@ -489,7 +492,7 @@ public class FarmSimulator : MonoBehaviour
         // Update tooltip text
         if (overflowLabel != null)
         {
-            overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>" + totalOverflow.ToString("F2") + " kg</size></b>";
+            overflowLabel.text = "<b><size=80>Outflow Phosphorus</size></b>\n<b><size=80>" + totalOverflow.ToString("F2") + " kg</size></b>";
             overflowLabel.fontSize = 80; 
 
 
@@ -521,7 +524,7 @@ public class FarmSimulator : MonoBehaviour
         // Reset the tooltip label text
         if (overflowLabel != null)
         {
-            overflowLabel.text = "<b><size=80>Cumulative P flux:</size></b>\n<b><size=80>0.00 kg</size></b>";
+            overflowLabel.text = "<b><size=80>Outflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
             overflowLabel.fontSize = 80;
         }
 
@@ -585,6 +588,7 @@ public class FarmSimulator : MonoBehaviour
 
 
 }
+
 
 
 // MaterialAnimator class to animate material properties

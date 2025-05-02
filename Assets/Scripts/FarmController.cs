@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class FarmController : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class FarmController : MonoBehaviour
     public ParticleSystem rainParticleSystem;
 
     [Header("Rain Audio Clips")]
+    public AudioSource rainAudioSource;
+    public AudioClip lightRainAudioBackground;
+    public AudioClip moderateRainAudioBackground;
+    public AudioClip heavyRainAudioBackground;
+
     public AudioClip lightRainAudio;
     public AudioClip moderateRainAudio;
     public AudioClip heavyRainAudio;
@@ -28,7 +34,8 @@ public class FarmController : MonoBehaviour
     public Interactable nextButton;
     public GameObject dayControlGroup;
 
-    private string[] rainfallScenarios = { "LightRainfall", "ModerateRainfall", "HeavyRainfall" };
+    //private string[] rainfallScenarios = { "LightRainfall", "ModerateRainfall", "HeavyRainfall" };
+    private string[] rainfallScenarios = { "LightRainfall",  "HeavyRainfall" };
     private int stepsPerScenario = 7;
     private int currentScenarioIndex = 0;
     private int currentDay = -1;
@@ -45,6 +52,15 @@ public class FarmController : MonoBehaviour
     public GameObject handMenu;
     public GameObject clickableObj;
     //public GameObject floorCanvas;
+    public GameObject sceneTransitionObj;
+
+    [Header("Reuse Fill UI Text")]
+    public TextMeshProUGUI smallFarmFillText;
+    public TextMeshProUGUI mediumFarmFillText;
+    public TextMeshProUGUI largeFarmFillText;
+    public GameObject smallFillTextGroup;
+    public GameObject mediumFillTextGroup;
+    public GameObject largeFillTextGroup;
 
     private IEnumerator Start()
     {
@@ -68,6 +84,9 @@ public class FarmController : MonoBehaviour
             mediumFarm.ResetOverflowCube();
             largeFarm.ResetOverflowCube();
 
+            smallFillTextGroup.SetActive(true);
+            mediumFillTextGroup.SetActive(true);
+            largeFillTextGroup.SetActive(true);
 
             currentScenarioIndex = scenarioIndex;
             string rain = rainfallScenarios[scenarioIndex];
@@ -78,7 +97,7 @@ public class FarmController : MonoBehaviour
                 {
                     "LightRainfall" => "Scenario 1: Light Rainfall",
                     "ModerateRainfall" => "Scenario 2: Moderate Rainfall",
-                    "HeavyRainfall" => "Scenario 3: Heavy Rainfall",
+                    "HeavyRainfall" => "Scenario 2: Heavy Rainfall",
                     _ => "Scenario: Unknown"
                 };
 
@@ -105,6 +124,8 @@ public class FarmController : MonoBehaviour
             playbackCoroutine = StartCoroutine(PlayFromDay(0));
             yield return playbackCoroutine;
         }
+
+
 
         isAutoPlaying = false;
     }
@@ -163,16 +184,34 @@ public class FarmController : MonoBehaviour
         List<float> mediumVolume = csvReader.GetColumnValues($"10ML_{rain}_StorageVolume");
         List<float> largeVolume = csvReader.GetColumnValues($"20ML_{rain}_StorageVolume");
 
+        List<float> smallTP = csvReader.GetColumnValues($"5ML_{rain}_TPFarm");
+        List<float> mediumTP = csvReader.GetColumnValues($"10ML_{rain}_TPFarm");
+        List<float> largeTP = csvReader.GetColumnValues($"20ML_{rain}_TPFarm");
+
+        List<float> smallFillList = csvReader.GetColumnValues($"5ML_{rain}_ReuseSystemFill");
+        List<float> mediumFillList = csvReader.GetColumnValues($"10ML_{rain}_ReuseSystemFill");
+        List<float> largeFillList = csvReader.GetColumnValues($"20ML_{rain}_ReuseSystemFill");
+
+
         for (int day = startDay; day < stepsPerScenario; day++)
         {
             currentDay = day;
             UpdateDayLabel(day);
             UpdateDayButtonStates();
 
+            smallFarm.paddockTPValue = smallTP[day];
+            mediumFarm.paddockTPValue = mediumTP[day];
+            largeFarm.paddockTPValue = largeTP[day];
+
+
+            smallFarmFillText.text = $"{smallFillList[day]}%";
+            mediumFarmFillText.text = $"{mediumFillList[day]}%";
+            largeFarmFillText.text = $"{largeFillList[day]}%";
+
             yield return StartCoroutine(PlayDay(day, rain, smallVolume, mediumVolume, largeVolume, smallOverflow, mediumOverflow, largeOverflow));
         }
 
-        // ✅ Only trigger transition if it's the last day
+        // Only trigger transition if it's the last day
         if (currentScenarioIndex < rainfallScenarios.Length - 1 && currentDay >= stepsPerScenario - 1)
         {
             currentScenarioIndex++;
@@ -183,7 +222,7 @@ public class FarmController : MonoBehaviour
             {
                 "LightRainfall" => "Scenario 1: Light Rainfall",
                 "ModerateRainfall" => "Scenario 2: Moderate Rainfall",
-                "HeavyRainfall" => "Scenario 3: Heavy Rainfall",
+                "HeavyRainfall" => "Scenario 2: Heavy Rainfall",
                 _ => "Scenario: Unknown"
             };
             AudioClip clip = nextRain switch
@@ -235,10 +274,17 @@ public class FarmController : MonoBehaviour
                                 dayControlGroup.SetActive(false);
                             }
 
+
+                            if (sceneTransitionObj != null)
+                            {
+                                sceneTransitionObj.SetActive(true);
+                            }
+
                             if (sceneTransition != null)
                             {
                                 sceneTransition.BeginTransition();
                             }
+
 
                             if (handMenu != null)
                             {
@@ -249,7 +295,6 @@ public class FarmController : MonoBehaviour
                             {
                                 clickableObj.SetActive(true);
                             }
-
                             //floorCanvas.SetActive(false);
 
                             break;
@@ -375,21 +420,26 @@ public class FarmController : MonoBehaviour
         {
             emission.rateOverTime = 10;
             main.startSize = 0.05f;
+            rainAudioSource.clip = lightRainAudioBackground;
             Debug.Log("Light rainfall started.");
         }
         else if (scenario == "ModerateRainfall")
         {
             emission.rateOverTime = 100;
             main.startSize = 0.08f;
+            rainAudioSource.clip = moderateRainAudioBackground;
             Debug.Log("Moderate rainfall started.");
         }
         else if (scenario == "HeavyRainfall")
         {
             emission.rateOverTime = 200;
             main.startSize = 0.1f;
+            rainAudioSource.clip = heavyRainAudioBackground;
             Debug.Log("Heavy rainfall started.");
         }
 
+        rainAudioSource.Play();
         rainParticleSystem.Play();
     }
+
 }

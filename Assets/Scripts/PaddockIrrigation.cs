@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PaddockIrrigation : MonoBehaviour
@@ -49,10 +50,23 @@ public class PaddockIrrigation : MonoBehaviour
     }
 
     // Coroutine to animate the saturation of the paddock
-    public IEnumerator AnimateSaturation()
+    //public IEnumerator AnimateSaturation()
+    //{
+    //    //if (currentState != PaddockState.Full) yield break;
+    //    yield return AnimateColor(basePaddockColor, saturatedPaddockColor);
+    //    currentState = PaddockState.Saturated;
+    //}
+
+
+    public IEnumerator AnimateSaturation(float tpValue)
     {
-        //if (currentState != PaddockState.Full) yield break;
-        yield return AnimateColor(basePaddockColor, saturatedPaddockColor);
+        Color targetColor = GetTargetColorFromTP(tpValue);
+
+        paddockMaterial.SetColor("_Color", saturatedPaddockColor);
+        paddockMaterial.SetColor("_BaseColor", saturatedPaddockColor);
+
+        Debug.Log($"[AnimateSaturation] Calculated targetColor = {targetColor}");
+        yield return AnimateColor(basePaddockColor, targetColor);
         currentState = PaddockState.Saturated;
     }
 
@@ -71,6 +85,7 @@ public class PaddockIrrigation : MonoBehaviour
         float elapsedTime = 0f;
         float duration = Mathf.Abs(targetPanner - initialPanner) / animationSpeed;
 
+
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
@@ -86,11 +101,14 @@ public class PaddockIrrigation : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 1f / animationSpeed;
 
+        Debug.Log($"[AnimateColor] From {initialColor} to {targetColor} over {duration:F2}s");
+
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             paddockMaterial.SetColor("_Color", Color.Lerp(initialColor, targetColor, t));
+
             yield return null;
         }
     }
@@ -101,4 +119,32 @@ public class PaddockIrrigation : MonoBehaviour
         useOffset = newUseOffset;
         paddockMaterial.SetFloat("_ReuseOffset", useOffset ? reuseOffset : 0.0f);
     }
+
+    //Public method to set the saturation of the paddock based on a TP value
+    private Color GetTargetColorFromTP(float tpValue)
+    {
+        float t = Mathf.Clamp01(tpValue / 8f);
+
+        Color cleanColor = new Color(0.71f, 1f, 0.71f);
+        Color pollutedColor = new Color(0.51f, 0.4f, 0.31f);
+        Color result = Color.Lerp(cleanColor, pollutedColor, t);
+
+        saturatedPaddockColor = result;
+
+        Debug.Log($"[TP Color] TP={tpValue}, Normalized={t}, Result={result}");
+
+
+        return saturatedPaddockColor;
+    }
+    public void SetTP(float tpValue)
+    {
+        Color newColor = GetTargetColorFromTP(tpValue);
+        saturatedPaddockColor = newColor;
+
+        paddockMaterial.SetColor("_Color", newColor);
+        paddockMaterial.SetColor("_BaseColor", newColor);
+    }
+
+
+
 }
