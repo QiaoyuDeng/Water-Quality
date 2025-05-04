@@ -132,7 +132,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299687436138005402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb3e26fd06b41d4baa022120f5cd617, type: 3}
   m_Name: 
@@ -268,7 +268,7 @@ MonoBehaviour:
   mainDivisions:
     messure: 0
     unitsPerDivision: 0
-    total: 3
+    total: 1
     material: {fileID: 2100000, guid: efebb8411b3539a4299fc48246fd2aff, type: 2}
     materialTiling:
       EnableTiling: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
     textPrefab: {fileID: 0}
     textPrefix: 
     textSuffix: 
-    fractionDigits: 2
+    fractionDigits: 0
     fontSize: 12
     fontSharpness: 3
     textDepth: 0
@@ -313,7 +313,7 @@ MonoBehaviour:
     textPrefab: {fileID: 0}
     textPrefix: 
     textSuffix: 
-    fractionDigits: 2
+    fractionDigits: 0
     fontSize: 12
     fontSharpness: 3
     textDepth: 0
@@ -799,7 +799,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3381283789552757798}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb3e26fd06b41d4baa022120f5cd617, type: 3}
   m_Name: 
@@ -935,7 +935,7 @@ MonoBehaviour:
   mainDivisions:
     messure: 0
     unitsPerDivision: 0
-    total: 3
+    total: 1
     material: {fileID: 2100000, guid: efebb8411b3539a4299fc48246fd2aff, type: 2}
     materialTiling:
       EnableTiling: 0
@@ -953,7 +953,7 @@ MonoBehaviour:
     textPrefab: {fileID: 0}
     textPrefix: 
     textSuffix: 
-    fractionDigits: 2
+    fractionDigits: 0
     fontSize: 12
     fontSharpness: 3
     textDepth: 0
@@ -980,7 +980,7 @@ MonoBehaviour:
     textPrefab: {fileID: 0}
     textPrefix: 
     textSuffix: 
-    fractionDigits: 2
+    fractionDigits: 0
     fontSize: 12
     fontSharpness: 3
     textDepth: 0
@@ -1061,7 +1061,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 160, y: -5}
-  m_SizeDelta: {x: 300, y: 33.165333}
+  m_SizeDelta: {x: 400, y: 33.165333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7778613197680413530
 Canvas:
@@ -1379,6 +1379,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2795970821002326733, guid: 6f8b75dc37019014d96e6df01384f0fa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795970821002326733, guid: 6f8b75dc37019014d96e6df01384f0fa, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -1392,7 +1396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4051355133100092892, guid: 6f8b75dc37019014d96e6df01384f0fa, type: 3}
       propertyPath: m_Name
-      value: DashBoardAnalysis Variant
+      value: DashBoardAnalysis_1
       objectReference: {fileID: 0}
     - target: {fileID: 4051355133100092893, guid: 6f8b75dc37019014d96e6df01384f0fa, type: 3}
       propertyPath: m_LocalPosition.x

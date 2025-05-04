@@ -2351,6 +2351,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2285278892461082038}
     m_Modifications:
+    - target: {fileID: 3648997528206470050, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648997528206470050, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0144
+      objectReference: {fileID: 0}
     - target: {fileID: 4215703320443252148, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_text
       value: Light Rainfall
@@ -2371,13 +2379,17 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4215703320454411296, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4215703320649419437, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_Name
       value: RainfallSelection
       objectReference: {fileID: 0}
     - target: {fileID: 4215703320649419437, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4215703320649419438, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2471,9 +2483,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4215703322081276609, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.03200001
+      objectReference: {fileID: 0}
     - target: {fileID: 4215703322326847577, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215703322359069204, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5038807571488239390, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       propertyPath: m_textAlignment
@@ -2556,12 +2576,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2131448075937200594, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6280030607814955596}
-    - targetCorrespondingSourceObject: {fileID: 2131448075292733878, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 773558778868056634}
     - targetCorrespondingSourceObject: {fileID: 2131448075572525411, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1862557980847902337}
+    - targetCorrespondingSourceObject: {fileID: 2131448075292733878, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 773558778868056634}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
 --- !u!4 &486565465616386886 stripped
@@ -3299,12 +3319,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2131448075937200594, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4383663868666140231}
-    - targetCorrespondingSourceObject: {fileID: 2131448075292733878, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6771509511088244256}
     - targetCorrespondingSourceObject: {fileID: 2131448075572525411, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5013173285814236699}
+    - targetCorrespondingSourceObject: {fileID: 2131448075292733878, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6771509511088244256}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2adb9bf13fbb7694bbf77b35226ff4af, type: 3}
 --- !u!4 &1304643894383105250 stripped

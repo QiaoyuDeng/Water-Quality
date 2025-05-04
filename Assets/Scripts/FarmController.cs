@@ -62,6 +62,16 @@ public class FarmController : MonoBehaviour
     public GameObject mediumFillTextGroup;
     public GameObject largeFillTextGroup;
 
+    [Header("Overflow Percent V.S. Small")]
+    public TextMeshProUGUI smallOverflowPercentText;
+    public TextMeshProUGUI mediumOverflowPercentText;
+    public TextMeshProUGUI largeOverflowPercentText;
+    public GameObject smallOverflowPercentGroup;
+    public GameObject mediumOverflowPercentGroup;
+    public GameObject largeOverflowPercentGroup;
+
+
+
     private IEnumerator Start()
     {
         csvReader.ReadCSV();
@@ -88,6 +98,10 @@ public class FarmController : MonoBehaviour
             mediumFillTextGroup.SetActive(true);
             largeFillTextGroup.SetActive(true);
 
+            smallOverflowPercentGroup.SetActive(true);
+            mediumOverflowPercentGroup.SetActive(true);
+            largeOverflowPercentGroup.SetActive(true);
+
             currentScenarioIndex = scenarioIndex;
             string rain = rainfallScenarios[scenarioIndex];
 
@@ -109,12 +123,12 @@ public class FarmController : MonoBehaviour
                     _ => null
                 };
 
-                Debug.Log($"🎬 Showing rain overlay: {rainLabel}, clip: {(clip != null ? clip.name : "null")}");
+                Debug.Log($"Showing rain overlay: {rainLabel}, clip: {(clip != null ? clip.name : "null")}");
                 yield return StartCoroutine(overlayController.ShowScenarioText(rainLabel, clip));
                 Debug.Log("✅ Finished rain overlay");
             }
 
-            Debug.Log("🌧️ Starting rain visual effect");
+            Debug.Log("Starting rain visual effect");
             SetRainByScenario(rain);
 
             if (dayControlGroup != null)
@@ -180,6 +194,10 @@ public class FarmController : MonoBehaviour
         List<float> mediumOverflow = csvReader.GetColumnValues($"10ML_{rain}_OverflowPlux");
         List<float> largeOverflow = csvReader.GetColumnValues($"20ML_{rain}_OverflowPlux");
 
+        List<float> smallOverflowPercent = csvReader.GetColumnValues($"5ML_{rain}_OverflowPluxPercentSmall");
+        List<float> mediumOverflowPercent = csvReader.GetColumnValues($"10ML_{rain}_OverflowPluxPercentSmall");
+        List<float> largeOverflowPercent = csvReader.GetColumnValues($"20ML_{rain}_OverflowPluxPercentSmall");
+
         List<float> smallVolume = csvReader.GetColumnValues($"5ML_{rain}_StorageVolume");
         List<float> mediumVolume = csvReader.GetColumnValues($"10ML_{rain}_StorageVolume");
         List<float> largeVolume = csvReader.GetColumnValues($"20ML_{rain}_StorageVolume");
@@ -207,6 +225,11 @@ public class FarmController : MonoBehaviour
             smallFarmFillText.text = $"{smallFillList[day]}%";
             mediumFarmFillText.text = $"{mediumFillList[day]}%";
             largeFarmFillText.text = $"{largeFillList[day]}%";
+
+            smallOverflowPercentText.text = $"{smallOverflowPercent[day]}%";
+            mediumOverflowPercentText.text = $"{mediumOverflowPercent[day]}%";
+            largeOverflowPercentText.text = $"{largeOverflowPercent[day]}%";
+
 
             yield return StartCoroutine(PlayDay(day, rain, smallVolume, mediumVolume, largeVolume, smallOverflow, mediumOverflow, largeOverflow));
         }
@@ -263,6 +286,7 @@ public class FarmController : MonoBehaviour
                             if (rainParticleSystem != null)
                             {
                                 rainParticleSystem.Stop();
+                                rainAudioSource.Stop();
                             }
 
                             smallFarm.HideOverflowObjects();

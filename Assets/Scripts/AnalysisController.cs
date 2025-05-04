@@ -1,5 +1,6 @@
 using UnityEngine;
 using ChartAndGraph;
+using System.Linq;
 
 public class AnalysisController : MonoBehaviour
 {
@@ -62,6 +63,29 @@ public class AnalysisController : MonoBehaviour
         var outflowFluxValues = csvReader.GetColumnValues(outflowFluxCol);
 
         int days = Mathf.Min(farmFluxValues.Count, outflowFluxValues.Count, 7);
+
+
+        // set the automatic axis of the bar chart data
+        if (farmFluxValues.All(v => v == 0))
+        {
+            farmBarChart.DataSource.AutomaticMaxValue = false;
+            farmBarChart.DataSource.MaxValue = 5f;
+        }
+        else 
+        {
+            farmBarChart.DataSource.AutomaticMaxValue = true;
+        }
+
+        if (outflowFluxValues.All(v => v == 0))
+        {
+            outflowBarChart.DataSource.AutomaticMaxValue = false;
+            outflowBarChart.DataSource.MaxValue = 5f;
+        }
+        else
+        {
+            outflowBarChart.DataSource.AutomaticMaxValue = true;
+        }
+
 
         for (int i = 0; i < days; i++)
         {

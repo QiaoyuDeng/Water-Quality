@@ -45,9 +45,11 @@ public class MenuIntroController : MonoBehaviour
     public Transform largeFarmTeleportTarget;
     public MRTKSceneTransition sceneTransition;
 
-    //public GameObject[] tooltips;
-    //public AudioClip[] audioClips;
-    //public AudioSource audioSource;
+    [Header("Rain Audio Clips")]
+    public AudioSource rainAudioSource;
+    public AudioClip lightRainAudioBackground;
+    public AudioClip moderateRainAudioBackground;
+    public AudioClip heavyRainAudioBackground;
 
     void Start()
     {
@@ -149,7 +151,7 @@ public class MenuIntroController : MonoBehaviour
     {
         if (rainParticleSystem == null)
         {
-            Debug.LogWarning("Rain particle system not assigned.");
+            Debug.LogWarning("❗ Rain particle system not assigned.");
             return;
         }
 
@@ -160,23 +162,25 @@ public class MenuIntroController : MonoBehaviour
         {
             emission.rateOverTime = 10;
             main.startSize = 0.05f;
+            rainAudioSource.clip = lightRainAudioBackground;
             Debug.Log("Light rainfall started.");
         }
         else if (scenario == "ModerateRainfall")
         {
             emission.rateOverTime = 100;
             main.startSize = 0.08f;
+            rainAudioSource.clip = moderateRainAudioBackground;
             Debug.Log("Moderate rainfall started.");
         }
         else if (scenario == "HeavyRainfall")
         {
             emission.rateOverTime = 200;
             main.startSize = 0.1f;
+            rainAudioSource.clip = heavyRainAudioBackground;
             Debug.Log("Heavy rainfall started.");
         }
 
-        rainParticleSystem.Stop();
-        rainParticleSystem.Clear();
+        rainAudioSource.Play();
         rainParticleSystem.Play();
     }
 

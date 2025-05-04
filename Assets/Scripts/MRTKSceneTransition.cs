@@ -7,6 +7,11 @@ public class MRTKSceneTransition : MonoBehaviour
     public Transform targetView;        // Target Position
     public float duration = 2.0f;       // Transition duration
     public FarmIntroSequence farmIntro;
+
+    [Header("Audio Introduction")]          
+    public AudioSource audioSource;
+    public AudioClip introAudioClips;
+
     //public GameObject introCanvas;      // introduction canvas
 
     public void BeginTransition()
@@ -48,6 +53,12 @@ public class MRTKSceneTransition : MonoBehaviour
         if (farmIntro != null)
         {
             farmIntro.StartFarmIntro();
+        }
+
+        if(audioSource != null && introAudioClips != null)
+        {
+            audioSource.clip = introAudioClips;
+            audioSource.Play();
         }
 
     }

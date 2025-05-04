@@ -57,6 +57,10 @@ public class ComparisonController : MonoBehaviour
         string[] farmSizes = { "5ML", "10ML", "20ML" };
         string[] displayNames = { "Small", "Medium", "Large" };
 
+        // set the automatic axis of the bar chart data
+        farmBarChart.DataSource.AutomaticMaxValue = true;
+        outflowBarChart.DataSource.AutomaticMaxValue = true;
+
         for (int i = 0; i < farmSizes.Length; i++)
         {
             string farmSize = farmSizes[i];

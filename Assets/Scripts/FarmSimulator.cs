@@ -492,7 +492,7 @@ public class FarmSimulator : MonoBehaviour
         // Update tooltip text
         if (overflowLabel != null)
         {
-            overflowLabel.text = "<b><size=80>Outflow Phosphorus</size></b>\n<b><size=80>" + totalOverflow.ToString("F2") + " kg</size></b>";
+            overflowLabel.text = "<b><size=80>Outflow Phosphorus</size></b>\n<b><size=80>" + Mathf.RoundToInt(totalOverflow) + " kg</size></b>";
             overflowLabel.fontSize = 80; 
 
 
