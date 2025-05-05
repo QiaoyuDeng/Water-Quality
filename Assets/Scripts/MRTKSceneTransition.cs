@@ -12,10 +12,9 @@ public class MRTKSceneTransition : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip introAudioClips;
 
-    //public GameObject introCanvas;      // introduction canvas
-
     public void BeginTransition()
     {
+        Debug.Log($"[DEBUG] This GameObject name: {gameObject.name}");
         StartCoroutine(TransitionToTarget());
     }
 
@@ -55,8 +54,12 @@ public class MRTKSceneTransition : MonoBehaviour
             farmIntro.StartFarmIntro();
         }
 
-        if(audioSource != null && introAudioClips != null)
+
+        Debug.Log($"audioSource is null: {audioSource == null}");
+        Debug.Log($"introAudioClips is null: {introAudioClips == null}");
+        if (audioSource != null && introAudioClips != null)
         {
+            Debug.Log("Playing audio clip...");
             audioSource.clip = introAudioClips;
             audioSource.Play();
         }

@@ -71,7 +71,11 @@ public class FarmSimulator : MonoBehaviour
     [Header("Paddock Saturation")]
     public float paddockTPValue = 0.0f; // paddock TP value for the current scenario
 
-
+    [Header("Other Visual Data")]
+    public GameObject ReuseFillTextGroup;
+    public GameObject OverflowPercentGroup;
+    public GameObject TotalPGroup;
+    public GameObject TotalPPercentGroup;
 
 
 
@@ -548,6 +552,18 @@ public class FarmSimulator : MonoBehaviour
 
         if (overflowTooltip != null)
             overflowTooltip.SetActive(false);
+
+        if (ReuseFillTextGroup != null)
+            ReuseFillTextGroup.SetActive(false);
+
+        if (OverflowPercentGroup != null)
+            OverflowPercentGroup.SetActive(false);
+
+        if (TotalPGroup != null)
+            TotalPGroup.SetActive(false);
+
+        if (TotalPPercentGroup != null)
+            TotalPPercentGroup.SetActive(false);
     }
 
 

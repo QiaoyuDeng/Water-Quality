@@ -51,7 +51,6 @@ public class FarmController : MonoBehaviour
     [Header("Hand Menu")]
     public GameObject handMenu;
     public GameObject clickableObj;
-    //public GameObject floorCanvas;
     public GameObject sceneTransitionObj;
 
     [Header("Reuse Fill UI Text")]
@@ -70,6 +69,21 @@ public class FarmController : MonoBehaviour
     public GameObject mediumOverflowPercentGroup;
     public GameObject largeOverflowPercentGroup;
 
+    [Header("Total P Volume")]
+    public TextMeshProUGUI smallTotalPText;
+    public TextMeshProUGUI mediumTotalPText;
+    public TextMeshProUGUI largeTotalPText;
+    public GameObject smallTotalPGroup;
+    public GameObject mediumTotalPGroup;
+    public GameObject largeTotalPGroup;
+
+    [Header("Total P V.S. Small")]
+    public TextMeshProUGUI smallTotalPPercentText;
+    public TextMeshProUGUI mediumTotalPPercentText;
+    public TextMeshProUGUI largeTotalPPercentText;
+    public GameObject smallTotalPPercentGroup;
+    public GameObject mediumTotalPPercentGroup;
+    public GameObject largeTotalPPercentGroup;
 
 
     private IEnumerator Start()
@@ -101,6 +115,15 @@ public class FarmController : MonoBehaviour
             smallOverflowPercentGroup.SetActive(true);
             mediumOverflowPercentGroup.SetActive(true);
             largeOverflowPercentGroup.SetActive(true);
+
+            smallTotalPGroup.SetActive(true);
+            mediumTotalPGroup.SetActive(true);
+            largeTotalPGroup.SetActive(true);
+
+            smallTotalPPercentGroup.SetActive(true);
+            mediumTotalPPercentGroup.SetActive(true);
+            largeTotalPPercentGroup.SetActive(true);
+
 
             currentScenarioIndex = scenarioIndex;
             string rain = rainfallScenarios[scenarioIndex];
@@ -210,6 +233,15 @@ public class FarmController : MonoBehaviour
         List<float> mediumFillList = csvReader.GetColumnValues($"10ML_{rain}_ReuseSystemFill");
         List<float> largeFillList = csvReader.GetColumnValues($"20ML_{rain}_ReuseSystemFill");
 
+        List<float> smallTotalP = csvReader.GetColumnValues($"5ML_{rain}_PfluxFarm_acc");
+        List<float> mediumTotalP = csvReader.GetColumnValues($"10ML_{rain}_PfluxFarm_acc");
+        List<float> largeTotalP = csvReader.GetColumnValues($"20ML_{rain}_PfluxFarm_acc");
+
+        List<float> smallTotalPPercent = csvReader.GetColumnValues($"5ML_{rain}_PfluxFarmPercentSmall");
+        List<float> mediumTotalPPercent = csvReader.GetColumnValues($"10ML_{rain}_PfluxFarmPercentSmall");
+        List<float> largeTotalPPercent = csvReader.GetColumnValues($"20ML_{rain}_PfluxFarmPercentSmall");
+
+
 
         for (int day = startDay; day < stepsPerScenario; day++)
         {
@@ -230,6 +262,15 @@ public class FarmController : MonoBehaviour
             mediumOverflowPercentText.text = $"{mediumOverflowPercent[day]}%";
             largeOverflowPercentText.text = $"{largeOverflowPercent[day]}%";
 
+            // Total Phosphorus Accumulated
+            smallTotalPText.text = $"{smallTotalP[day]}kg";
+            mediumTotalPText.text = $"{mediumTotalP[day]}kg";
+            largeTotalPText.text = $"{largeTotalP[day]}kg";
+
+            // Total Phosphorus Percent vs Small
+            smallTotalPPercentText.text = $"{smallTotalPPercent[day]}%";
+            mediumTotalPPercentText.text = $"{mediumTotalPPercent[day]}%";
+            largeTotalPPercentText.text = $"{largeTotalPPercent[day]}%";
 
             yield return StartCoroutine(PlayDay(day, rain, smallVolume, mediumVolume, largeVolume, smallOverflow, mediumOverflow, largeOverflow));
         }

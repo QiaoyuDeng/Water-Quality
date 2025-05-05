@@ -78,6 +78,8 @@ public class FarmIntroSequence : MonoBehaviour
             }
         }
 
+        yield return StartCoroutine(IntroduceFarmIndicators());
+
         Dialog myDialog = Dialog.Open(
             dialogPrefab
         );
@@ -103,4 +105,91 @@ public class FarmIntroSequence : MonoBehaviour
 
         Debug.Log("✅ Farm highlight sequence finished.");
     }
+
+    private IEnumerator IntroduceFarmIndicators()
+    {
+        Debug.Log("🎯 Highlighting key phosphorus indicators...");
+
+        // 四类指标：每类包含三个农场的对象
+        GameObject[][] indicatorGroups = new GameObject[][]
+        {
+        new GameObject[] {
+            controller.smallFarm.ReuseFillTextGroup,
+            controller.mediumFarm.ReuseFillTextGroup,
+            controller.largeFarm.ReuseFillTextGroup
+        },
+        new GameObject[] {
+            controller.smallFarm.OverflowPercentGroup,
+            controller.mediumFarm.OverflowPercentGroup,
+            controller.largeFarm.OverflowPercentGroup
+        },
+        new GameObject[] {
+            controller.smallFarm.TotalPGroup,
+            controller.mediumFarm.TotalPGroup,
+            controller.largeFarm.TotalPGroup
+        },
+        new GameObject[] {
+            controller.smallFarm.TotalPPercentGroup,
+            controller.mediumFarm.TotalPPercentGroup,
+            controller.largeFarm.TotalPPercentGroup
+        }
+        };
+
+        int audioOffset = floorObjects.Length + 1; // 跳过前面 floor 的语音，取对应指标的语音
+
+        for (int groupIndex = 0; groupIndex < indicatorGroups.Length; groupIndex++)
+        {
+            GameObject[] group = indicatorGroups[groupIndex];
+            Material[] originalMats = new Material[group.Length];
+
+            // Step 1: 激活物体（Renderer 必须依赖 active 状态）
+            for (int i = 0; i < group.Length; i++)
+            {
+                if (group[i] != null)
+                    group[i].SetActive(true);
+            }
+
+            yield return null; // 确保激活状态更新完成
+
+            // Step 2: 高亮材质
+            for (int i = 0; i < group.Length; i++)
+            {
+                Renderer r = group[i].GetComponent<Renderer>();
+                if (r != null)
+                {
+                    originalMats[i] = r.material;
+                    r.material = highlightMaterial;
+                }
+            }
+
+            // Step 3: 播放对应音频
+            int audioIndex = audioOffset + groupIndex;
+            if (introAudioClips.Length > audioIndex && introAudioClips[audioIndex] != null)
+            {
+                audioSource.clip = introAudioClips[audioIndex];
+                audioSource.Play();
+                yield return new WaitForSeconds(skipAudio ? 1f : audioSource.clip.length);
+            }
+            else
+            {
+                yield return new WaitForSeconds(displayTime);
+            }
+
+            // Step 4: 恢复原材质并隐藏
+            for (int i = 0; i < group.Length; i++)
+            {
+                Renderer r = group[i].GetComponent<Renderer>();
+                if (r != null && originalMats[i] != null)
+                {
+                    r.material = originalMats[i];
+                }
+
+                group[i].SetActive(false);
+            }
+        }
+
+        Debug.Log("✅ Finished indicator highlighting.");
+    }
+
+
 }
