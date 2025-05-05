@@ -51,6 +51,10 @@ public class MenuIntroController : MonoBehaviour
     public AudioClip moderateRainAudioBackground;
     public AudioClip heavyRainAudioBackground;
 
+    [Header("Hand Menu Labels")]
+    public TMPro.TextMeshPro reuseSystemLabel;
+    public TMPro.TextMeshPro rainfallLabel;
+
     void Start()
     {
         // Initialize the dropdown menu list
@@ -81,6 +85,9 @@ public class MenuIntroController : MonoBehaviour
     {
         currentFarmSize = size;
         UpdateDataColumn();
+
+        if (reuseSystemLabel != null)
+            reuseSystemLabel.text = size;
     }
 
     public void OnScenarioSelected(string scenario)
@@ -89,6 +96,9 @@ public class MenuIntroController : MonoBehaviour
         UpdateDataColumn();
 
         SetRainByScenario(scenario);
+
+        if (rainfallLabel != null)
+            rainfallLabel.text = scenario;
     }
 
     public void OnTargetSelected(string target)
