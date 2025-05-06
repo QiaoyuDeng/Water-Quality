@@ -12268,7 +12268,7 @@ MonoBehaviour:
   pivot: {fileID: 425079732}
   label: {fileID: 1604510041}
   contentParent: {fileID: 2061585959}
-  toolTipText: " <b><size=80>Outflow Phosphorus</size></b> \n <b><size=80>0.00 kg</size></b>"
+  toolTipText: " <b><size=80>Overflow Phosphorus</size></b> \n <b><size=80>0.00 kg</size></b>"
   backgroundPadding: {x: 0.075, y: 0.015}
   backgroundOffset: {x: 0, y: 0, z: 0}
   contentScale: 2
@@ -14578,7 +14578,8 @@ MonoBehaviour:
   pivot: {fileID: 2068821623}
   label: {fileID: 1789595918}
   contentParent: {fileID: 60225655}
-  toolTipText: " <b><size=80>Outflow Phosphorus </size></b> \n <b><size=80>0.00 kg</size></b>"
+  toolTipText: " <b><size=80>Overflow Phosphorus </size></b> \n <b><size=80>0.00
+    kg</size></b>"
   backgroundPadding: {x: 0.075, y: 0.015}
   backgroundOffset: {x: 0, y: 0, z: 0}
   contentScale: 2
@@ -37507,11 +37508,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 56e7c325029d6644f99ffeea00ccfebc, type: 3}
   - {fileID: 8300000, guid: 2c406f7c7517f374dbe85ff534decd08, type: 3}
   - {fileID: 8300000, guid: c7afadc430b6b1f40a85fd90ba67675b, type: 3}
+  - {fileID: 8300000, guid: a6b0ecf6ab9256148a9c417d862fedea, type: 3}
+  - {fileID: 8300000, guid: 419dff4cd1cbd8c4982fd70004a7a154, type: 3}
+  - {fileID: 8300000, guid: 651577423f76c8c40943d4aab5e552df, type: 3}
+  - {fileID: 8300000, guid: 59c59b8d79724f543ab2cb6f26ad02a0, type: 3}
+  - {fileID: 8300000, guid: 1cc9db7f9f6a8834cabf17e94f6fe8ec, type: 3}
   audioSource: {fileID: 447232130}
   dialogPrefab: {fileID: 5475465534354963241, guid: 35e5382359c221f4db7081b0e8e8927c, type: 3}
   controller: {fileID: 337101260}
   displayTime: 3
   skipAudio: 1
+  smallFarmPFlux: {fileID: 915951731}
+  mediumFarmPFlux: {fileID: 1987030103}
+  largeFarmPFlux: {fileID: 1335619442}
 --- !u!65 &1160997870
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48724,7 +48733,8 @@ MonoBehaviour:
   pivot: {fileID: 399564569}
   label: {fileID: 801443762}
   contentParent: {fileID: 2107085749}
-  toolTipText: " <b><size=80>Outflow Phosphorus </size></b> \n <b><size=80>0.00 kg</size></b>"
+  toolTipText: " <b><size=80>Overflow Phosphorus </size></b> \n <b><size=80>0.00
+    kg</size></b>"
   backgroundPadding: {x: 0.075, y: 0.015}
   backgroundOffset: {x: 0, y: 0, z: 0}
   contentScale: 2

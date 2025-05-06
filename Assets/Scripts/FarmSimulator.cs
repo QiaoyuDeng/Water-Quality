@@ -484,7 +484,7 @@ public class FarmSimulator : MonoBehaviour
         {
             if (!overflowTooltip.activeSelf) 
             {
-                overflowLabel.text = "<b><size=80>Outflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
+                overflowLabel.text = "<b><size=80>Overflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
                 overflowTooltip.SetActive(true);
             }
                 
@@ -496,7 +496,7 @@ public class FarmSimulator : MonoBehaviour
         // Update tooltip text
         if (overflowLabel != null)
         {
-            overflowLabel.text = "<b><size=80>Outflow Phosphorus</size></b>\n<b><size=80>" + Mathf.RoundToInt(totalOverflow) + " kg</size></b>";
+            overflowLabel.text = "<b><size=80>Overflow Phosphorus</size></b>\n<b><size=80>" + Mathf.RoundToInt(totalOverflow) + " kg</size></b>";
             overflowLabel.fontSize = 80; 
 
 
@@ -528,7 +528,7 @@ public class FarmSimulator : MonoBehaviour
         // Reset the tooltip label text
         if (overflowLabel != null)
         {
-            overflowLabel.text = "<b><size=80>Outflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
+            overflowLabel.text = "<b><size=80>Overflow Phosphorus:</size></b>\n<b><size=80>0.00 kg</size></b>";
             overflowLabel.fontSize = 80;
         }
 

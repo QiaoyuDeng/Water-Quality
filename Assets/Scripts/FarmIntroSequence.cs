@@ -18,6 +18,11 @@ public class FarmIntroSequence : MonoBehaviour
     [Header("Testing Options")]
     public bool skipAudio = false; // If true, skip audio wait and use 1s per clip 
 
+    [Header("Farm PFlux Objects")]
+    public GameObject smallFarmPFlux;
+    public GameObject mediumFarmPFlux;
+    public GameObject largeFarmPFlux;
+
     void Start()
     {
         // Store the original material of each floor object
@@ -103,25 +108,30 @@ public class FarmIntroSequence : MonoBehaviour
         }
 
 
-        Debug.Log("✅ Farm highlight sequence finished.");
+        Debug.Log("Farm highlight sequence finished.");
     }
 
     private IEnumerator IntroduceFarmIndicators()
     {
-        Debug.Log("🎯 Highlighting key phosphorus indicators...");
+        Debug.Log("Highlighting key phosphorus indicators...");
 
-        // 四类指标：每类包含三个农场的对象
+        
         GameObject[][] indicatorGroups = new GameObject[][]
         {
         new GameObject[] {
-            controller.smallFarm.ReuseFillTextGroup,
-            controller.mediumFarm.ReuseFillTextGroup,
-            controller.largeFarm.ReuseFillTextGroup
+            smallFarmPFlux,
+            mediumFarmPFlux,
+            largeFarmPFlux
         },
         new GameObject[] {
             controller.smallFarm.OverflowPercentGroup,
             controller.mediumFarm.OverflowPercentGroup,
             controller.largeFarm.OverflowPercentGroup
+        },
+        new GameObject[] {
+            controller.smallFarm.ReuseFillTextGroup,
+            controller.mediumFarm.ReuseFillTextGroup,
+            controller.largeFarm.ReuseFillTextGroup
         },
         new GameObject[] {
             controller.smallFarm.TotalPGroup,
@@ -133,25 +143,26 @@ public class FarmIntroSequence : MonoBehaviour
             controller.mediumFarm.TotalPPercentGroup,
             controller.largeFarm.TotalPPercentGroup
         }
+
         };
 
-        int audioOffset = floorObjects.Length + 1; // 跳过前面 floor 的语音，取对应指标的语音
+        int audioOffset = floorObjects.Length + 1; 
 
         for (int groupIndex = 0; groupIndex < indicatorGroups.Length; groupIndex++)
         {
             GameObject[] group = indicatorGroups[groupIndex];
             Material[] originalMats = new Material[group.Length];
 
-            // Step 1: 激活物体（Renderer 必须依赖 active 状态）
+            
             for (int i = 0; i < group.Length; i++)
             {
                 if (group[i] != null)
                     group[i].SetActive(true);
             }
 
-            yield return null; // 确保激活状态更新完成
+            yield return null; 
 
-            // Step 2: 高亮材质
+            
             for (int i = 0; i < group.Length; i++)
             {
                 Renderer r = group[i].GetComponent<Renderer>();
@@ -162,7 +173,7 @@ public class FarmIntroSequence : MonoBehaviour
                 }
             }
 
-            // Step 3: 播放对应音频
+            
             int audioIndex = audioOffset + groupIndex;
             if (introAudioClips.Length > audioIndex && introAudioClips[audioIndex] != null)
             {
@@ -175,7 +186,7 @@ public class FarmIntroSequence : MonoBehaviour
                 yield return new WaitForSeconds(displayTime);
             }
 
-            // Step 4: 恢复原材质并隐藏
+            
             for (int i = 0; i < group.Length; i++)
             {
                 Renderer r = group[i].GetComponent<Renderer>();
@@ -188,7 +199,7 @@ public class FarmIntroSequence : MonoBehaviour
             }
         }
 
-        Debug.Log("✅ Finished indicator highlighting.");
+        Debug.Log("Finished indicator highlighting.");
     }
 
 
