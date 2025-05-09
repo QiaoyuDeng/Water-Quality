@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4170878069366924770, guid: 6dda9b38aa3f71344a185ec1cd0b1c64, type: 3}
+      propertyPath: m_text
+      value: Total Farm Phosphorus Loss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6820835903451011825, guid: 6dda9b38aa3f71344a185ec1cd0b1c64, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.33569816
+      objectReference: {fileID: 0}
     - target: {fileID: 6821016214552424931, guid: 6dda9b38aa3f71344a185ec1cd0b1c64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52,9 +60,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: TotalPTooltip
       objectReference: {fileID: 0}
+    - target: {fileID: 6850580730193238885, guid: 6dda9b38aa3f71344a185ec1cd0b1c64, type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 0.17761612
+      objectReference: {fileID: 0}
     - target: {fileID: 6857954041655436643, guid: 6dda9b38aa3f71344a185ec1cd0b1c64, type: 3}
       propertyPath: toolTipText
-      value: Total Farm Phosphorus
+      value: Total Farm Phosphorus Loss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

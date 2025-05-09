@@ -14,11 +14,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3229523781413161545, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 0.17761612
+      value: 0.12773225
+      objectReference: {fileID: 0}
+    - target: {fileID: 3237884318698761299, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
+      propertyPath: endPoint.position.y
+      value: 0.12773225
       objectReference: {fileID: 0}
     - target: {fileID: 3238067214553756751, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: toolTipText
-      value: Total Phosphorus Relative to Small
+      value: 'Total Phosphorus Loss
+
+        Relative to Small'
       objectReference: {fileID: 0}
     - target: {fileID: 3272615270875701455, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62,7 +68,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3272936301660113885, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.40704855
+      value: 0.28366807
+      objectReference: {fileID: 0}
+    - target: {fileID: 3272936301660113885, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.079724036
       objectReference: {fileID: 0}
     - target: {fileID: 3276780680142857125, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_Name
@@ -74,7 +84,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341932872621503694, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_text
-      value: Total Phosphorus Relative to Small
+      value: 'Total Phosphorus Loss
+
+        Relative to Small'
       objectReference: {fileID: 0}
     - target: {fileID: 5341932872621503694, guid: 7a41d02b8122b514c8733178dd7e5c28, type: 3}
       propertyPath: m_overflowMode

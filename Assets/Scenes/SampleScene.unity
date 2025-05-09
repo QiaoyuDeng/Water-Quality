@@ -2365,7 +2365,7 @@ MonoBehaviour:
   title: 'Paddock
 
     <size=7> used for grazing animals and planting plants.'
-  description: <size=10> Total Phosphorus Volume
+  description: '<size=10> Total Farm Phosphorus Loss      '
   unit: <size=10>    kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -9293,43 +9293,43 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c7ce674b0130fe840963fac41e6b88fa, type: 2}
     - target: {fileID: 1530509835723556312, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509835723556312, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509835723556312, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509835723556312, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.00189
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777428, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777428, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777428, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 17.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777428, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 17.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777428, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777431, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Total Farm Phosphorus Over Time
+      value: Total Farm Phosphorus Loss
       objectReference: {fileID: 0}
     - target: {fileID: 1734222346293361353, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: fontSize
@@ -9337,23 +9337,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2811648881596241793, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811648881596241793, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811648881596241793, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 17.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811648881596241793, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 235
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811648881596241793, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2919211778011340476, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: Data.mCategories.Array.data[0].Name
@@ -9421,15 +9421,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4175115444698790022, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Comparing Reuse Systems
+      value: Comparing Reuse Systems Over Time
       objectReference: {fileID: 0}
     - target: {fileID: 4175115444698790022, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4175115444698790022, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_fontSizeBase
-      value: 24
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4175115445478262928, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_Name
@@ -9437,7 +9437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4175115445478262928, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4175115445478262929, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9497,19 +9497,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501935413201036176, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5501935413201036176, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5501935413201036176, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5501935413201036176, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -194.70755
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6902421501515267524, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: fontSize
@@ -9517,7 +9517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087793328134525940, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Overflow Phosphorus Over Time
+      value: Overflow Phosphorus
       objectReference: {fileID: 0}
     - target: {fileID: 7155221260767305013, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_LocalScale.x
@@ -9529,19 +9529,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160142661164287538, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160142661164287538, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160142661164287538, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -62.15908
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160142661164287538, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -115.35567
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8502330692357846407, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -9562,6 +9562,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4175115445478262928, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       insertIndex: -1
       addedObject: {fileID: 373179498}
+    - targetCorrespondingSourceObject: {fileID: 1925403504202328463, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
 --- !u!4 &373179489 stripped
 Transform:
@@ -12662,7 +12665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836308777431, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Total Farm Phosphorus Over Time
+      value: 'Total Farm Phosphorus Loss '
       objectReference: {fileID: 0}
     - target: {fileID: 1530509836362544328, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -12974,7 +12977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4175115444698790022, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Daily Changes in Farm Pollution
+      value: Farm Phosphorus Over Time
       objectReference: {fileID: 0}
     - target: {fileID: 4175115445478262928, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_Name
@@ -13066,7 +13069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087793328134525940, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_text
-      value: Overflow Phosphorus Over Time
+      value: Overflow Phosphorus
       objectReference: {fileID: 0}
     - target: {fileID: 7155221260767305013, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       propertyPath: m_LocalScale.x
@@ -13111,6 +13114,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4175115445478262928, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
       insertIndex: -1
       addedObject: {fileID: 455078396}
+    - targetCorrespondingSourceObject: {fileID: 1925403504202328463, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 450c45f7a90cbb649a5af03229ece044, type: 3}
 --- !u!4 &455078391 stripped
 Transform:
@@ -30791,7 +30797,7 @@ MonoBehaviour:
   title: 'Paddock
 
     <size=7> used for grazing animals and planting plants.'
-  description: <size=10> Total Phosphorus Volume
+  description: '<size=10> Total Farm Phosphorus Loss      '
   unit: <size=10>    kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -32367,7 +32373,7 @@ MonoBehaviour:
   smallFarmTeleportTarget: {fileID: 907305700}
   mediumFarmTeleportTarget: {fileID: 24905050}
   largeFarmTeleportTarget: {fileID: 727139278}
-  sceneTransition: {fileID: 0}
+  sceneTransition: {fileID: 1222817651}
   rainAudioSource: {fileID: 1166389984}
   lightRainAudioBackground: {fileID: 8300000, guid: e769664d3abb9034c946341e806467c0, type: 3}
   moderateRainAudioBackground: {fileID: 0}
@@ -34806,7 +34812,7 @@ MonoBehaviour:
   scenarioText: {fileID: 82504040}
   audioSource: {fileID: 447232130}
   fadeDuration: 0.5
-  skipAudio: 1
+  skipAudio: 0
 --- !u!114 &1032120026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36860,7 +36866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658661375723811206, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008174618638029063, guid: 75871044e9982ca47aa48612f87923df, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -37511,16 +37517,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a6b0ecf6ab9256148a9c417d862fedea, type: 3}
   - {fileID: 8300000, guid: 419dff4cd1cbd8c4982fd70004a7a154, type: 3}
   - {fileID: 8300000, guid: 651577423f76c8c40943d4aab5e552df, type: 3}
-  - {fileID: 8300000, guid: 59c59b8d79724f543ab2cb6f26ad02a0, type: 3}
-  - {fileID: 8300000, guid: 1cc9db7f9f6a8834cabf17e94f6fe8ec, type: 3}
+  - {fileID: 8300000, guid: 7324ffd01b4121946b66fb8769b7ddb8, type: 3}
+  - {fileID: 8300000, guid: 774766f45006ea248bb4ed3a4f470eac, type: 3}
   audioSource: {fileID: 447232130}
   dialogPrefab: {fileID: 5475465534354963241, guid: 35e5382359c221f4db7081b0e8e8927c, type: 3}
   controller: {fileID: 337101260}
   displayTime: 3
-  skipAudio: 1
-  smallFarmPFlux: {fileID: 915951731}
-  mediumFarmPFlux: {fileID: 1987030103}
-  largeFarmPFlux: {fileID: 1335619442}
+  skipAudio: 0
+  smallFarmPFlux: {fileID: 1187054229}
+  mediumFarmPFlux: {fileID: 492760688}
+  largeFarmPFlux: {fileID: 448122871}
 --- !u!65 &1160997870
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50020,6 +50026,174 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 350, y: 250}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &1222817650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222817654}
+  - component: {fileID: 1222817653}
+  - component: {fileID: 1222817652}
+  - component: {fileID: 1222817651}
+  m_Layer: 0
+  m_Name: ViewTransitionSection4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1222817651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222817650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436fcc3cc5a4ca14ab8681f27590a860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetView: {fileID: 0}
+  duration: 2
+  farmIntro: {fileID: 0}
+  audioSource: {fileID: 0}
+  introAudioClips: {fileID: 0}
+--- !u!82 &1222817652
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222817650}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!65 &1222817653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222817650}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 20, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1222817654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222817650}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.030074239, y: 0.043, z: 0.614}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1223442966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54177,10 +54351,10 @@ RectTransform:
   - {fileID: 1515944502}
   m_Father: {fileID: 1925451615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -39.470444}
-  m_SizeDelta: {x: 350, y: 25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 25}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1385380531
 MonoBehaviour:
@@ -55962,10 +56136,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1385380530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 25}
+  m_SizeDelta: {x: 150, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1455152039
 MonoBehaviour:
@@ -56811,10 +56985,10 @@ RectTransform:
   - {fileID: 1716374535}
   m_Father: {fileID: 1925451615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 122.15908, y: -133.94089}
-  m_SizeDelta: {x: 224.31816, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1498955662
 GameObject:
@@ -57583,10 +57757,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1385380530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: 0}
-  m_SizeDelta: {x: 200, y: 25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1515944503
 MonoBehaviour:
@@ -58815,7 +58989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1580408221
 Transform:
   m_ObjectHideFlags: 0
@@ -63138,7 +63312,7 @@ MonoBehaviour:
   dialogPrefab: {fileID: 3734847413348138638, guid: ce04a00d70c979841908d1344234b4d3, type: 3}
   MenuIntroController: {fileID: 952100601}
   sceneTransition: {fileID: 2051655044}
-  skipAudio: 1
+  skipAudio: 0
   clickableObj: {fileID: 1580408220}
 --- !u!1 &1725853662
 GameObject:
@@ -63308,7 +63482,7 @@ MonoBehaviour:
   title: 'Overflow Outlet
 
     <size=7> releases excess water when storage is full.'
-  description: <size=10> Outflow Phosphorus
+  description: <size=10> Overflow Phosphorus
   unit: <size=10>    Kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -68469,15 +68643,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 224.31816
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -68489,11 +68663,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657494, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548163240244657495, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_Name
@@ -68665,7 +68839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6931746692681640070, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6931746692681640071, guid: 3b78034f942380f4793343637a1f246f, type: 3}
       propertyPath: m_LocalScale.x
@@ -74582,10 +74756,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1385380530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: 0}
-  m_SizeDelta: {x: 30, y: 25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1948550580
 MonoBehaviour:
@@ -81639,7 +81813,7 @@ MonoBehaviour:
   title: 'Overflow Outlet
 
     <size=7> releases excess water when storage is full.'
-  description: <size=10> Outflow Phosphorus
+  description: <size=10> Overflow Phosphorus
   unit: <size=10>    Kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -82841,7 +83015,7 @@ MonoBehaviour:
   title: 'Overflow Outlet
 
     <size=7> releases excess water when storage is full.'
-  description: <size=10> Outflow Phosphorus
+  description: <size=10> Overflow Phosphorus
   unit: <size=10>    Kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -84038,7 +84212,7 @@ MonoBehaviour:
   title: 'Paddock
 
     <size=7> used for grazing animals and planting plants.'
-  description: <size=10> Total Phosphorus Volume
+  description: '<size=10> Total Farm Phosphorus Loss      '
   unit: <size=10>    kg
   normalMaterial: {fileID: 2100000, guid: e40c41770da2a0748a62c8f1fde49c84, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 6c1a0a5b82ca9524e93081be3b5ea49a, type: 2}
@@ -88830,4 +89004,5 @@ SceneRoots:
   - {fileID: 337101261}
   - {fileID: 2051655048}
   - {fileID: 1164658314}
+  - {fileID: 1222817654}
   - {fileID: 1333665736}
